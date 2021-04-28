@@ -26,6 +26,18 @@ public class HomeFragment extends Fragment {
         cards.add(new Card("Sprinkler 2", "Home", R.color.purple_200, R.color.purple_700));
         cards.add(new Card("Sprinkler 3", "Farm", R.color.purple_200, R.color.purple_700));
         cards.add(new Card("Sprinkler 4", "Lawn", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 5", "Lawn", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 6", "Home", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 7", "Farm", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 8", "Lawn", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 9", "Lawn", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 10", "Home", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 11", "Farm", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 12", "Lawn", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 13", "Lawn", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 14", "Home", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 15", "Farm", R.color.purple_200, R.color.purple_700));
+        cards.add(new Card("Sprinkler 16", "Lawn", R.color.purple_200, R.color.purple_700));
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
