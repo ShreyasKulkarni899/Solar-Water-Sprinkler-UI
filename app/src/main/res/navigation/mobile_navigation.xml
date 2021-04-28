@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_home_fragment">
+
+    <fragment
+        android:id="@+id/nav_home_fragment"
+        android:name="com.nkocet.untitled.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_time_control_fragment"
+        android:name="com.nkocet.untitled.TimeControlFragment"
+        android:label="@string/time_control"
+        tools:layout="@layout/fragment_time_control" />
+
+    <fragment
+        android:id="@+id/nav_crop_guide_fragment"
+        android:name="com.nkocet.untitled.CropGuideFragment"
+        android:label="@string/guide"
+        tools:layout="@layout/fragment_crop_guide" />
+
+    <fragment
+        android:id="@+id/nav_help_fragment"
+        android:name="com.nkocet.untitled.HelpFragment"
+        android:label="@string/help"
+        tools:layout="@layout/fragment_help" />
+
+    <fragment
+        android:id="@+id/nav_settings_fragment"
+        android:name="com.nkocet.untitled.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>
