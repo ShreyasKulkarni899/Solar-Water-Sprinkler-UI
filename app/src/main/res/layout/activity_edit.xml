@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="30dp"
+    android:orientation="vertical"
+    tools:context=".EditActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="Customise\nyour device"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/currentStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status: Online"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/currentRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rate: 5ms"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/edit_power_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="?android:selectableItemBackground"
+            android:padding="10dp"
+            android:src="@drawable/ic_baseline_power_settings_new_24"
+            android:tooltipText="Power off" />
+
+        <ImageButton
+            android:id="@+id/delete"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/edit_power_off"
+            android:background="?android:selectableItemBackground"
+            android:padding="10dp"
+            android:src="@drawable/ic_round_delete_24"
+            android:tooltipText="Delete" />
+
+        <ImageButton
+            android:id="@+id/auto"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/delete"
+            android:background="?android:selectableItemBackground"
+            android:padding="10dp"
+            android:src="@drawable/ic_baseline_auto_fix_high_24"
+            android:tooltipText="Auto" />
+    </RelativeLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:errorEnabled="true"
+        app:startIconDrawable="@drawable/ic_baseline_edit_note_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editDeviceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:errorEnabled="true"
+        app:helperText="Set a location"
+        app:startIconDrawable="@drawable/ic_baseline_my_location_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editDeviceLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/flowRateSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:stepSize="5"
+        android:valueFrom="0"
+        android:valueTo="100"
+        app:trackHeight="10dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:errorEnabled="true"
+        app:helperText="Set a rate"
+        app:startIconDrawable="@drawable/ic_baseline_shower_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editFlowRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rate" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Repeat every" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/day1"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sunday" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/day2"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/day3"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tuesday" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/day4"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wednesday" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/day5"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thursday" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/day6"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friday" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/day7"
+            style="@style/CustomChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saturday" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:text="Save" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

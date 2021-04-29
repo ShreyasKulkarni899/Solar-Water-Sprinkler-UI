@@ -1,15 +1,17 @@
 package com.nkocet.untitled;
 
-public class Card {
-    public String name, location;
-    public int cardBackgroundColor, cardBottomColor;
-    static final int ONLINE = 1;
-    static final int OFFLINE = 0;
+import java.io.Serializable;
 
-    public Card(String name, String location, int cardBackgroundColor, int cardForegroundColor) {
+public class Card implements Serializable {
+    public String name, location, cardBackgroundColor, cardBottomColor, textColor;
+    public Sprinkler sprinkler;
+
+    public Card(String name, String location, String[] colors, Sprinkler sprinkler) {
         this.name = name;
         this.location = location;
-        this.cardBackgroundColor = cardBackgroundColor;
-        this.cardBottomColor = cardForegroundColor;
+        this.cardBackgroundColor = colors[0];
+        this.cardBottomColor = colors[1];
+        this.textColor = colors[2];
+        this.sprinkler = sprinkler;
     }
 }

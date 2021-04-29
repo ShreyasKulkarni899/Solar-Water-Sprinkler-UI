@@ -7,15 +7,14 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardBody"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
         android:clickable="true"
-        app:cardBackgroundColor="#EAF4FF"
         app:cardCornerRadius="8dp">
 
         <RelativeLayout
+            android:id="@+id/cardBody"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -31,13 +30,14 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:background="?android:selectableItemBackground"
                 android:clickable="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_baseline_more_vert_24" />
+                android:src="@drawable/ic_baseline_power_settings_new_24" />
 
             <LinearLayout
                 android:id="@+id/cardBottom"

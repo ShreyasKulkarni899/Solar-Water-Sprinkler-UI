@@ -1,8 +1,12 @@
 package com.nkocet.untitled;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +26,9 @@ public class Dashboard extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigationView;
+    TextView name;
+    View view;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,11 @@ public class Dashboard extends AppCompatActivity {
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        view = navigationView.getHeaderView(0);
+        name = view.findViewById(R.id.navName);
+        preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+        name.setText(preferences.getString("name", "No name"));
 
         /* Passing each menu ID as a set of Ids because each
          * menu should be considered as top level destinations. */
