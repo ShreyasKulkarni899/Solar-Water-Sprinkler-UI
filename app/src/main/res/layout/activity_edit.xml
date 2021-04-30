@@ -141,6 +141,9 @@
         android:stepSize="5"
         android:valueFrom="0"
         android:valueTo="100"
+        app:thumbElevation="0dp"
+        app:thumbRadius="8dp"
+        app:tickVisible="false"
         app:trackHeight="10dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -263,10 +266,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/save"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:text="Save" />

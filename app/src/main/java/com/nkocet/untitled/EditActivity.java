@@ -2,6 +2,7 @@ package com.nkocet.untitled;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class EditActivity extends AppCompatActivity {
     Slider slider;
     Chip SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
     MaterialTimePicker timePicker;
+    Vibrator vibrator;
 
     MaterialButton save, cancel;
 
@@ -34,6 +36,7 @@ public class EditActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel);
         start = findViewById(R.id.editStartTime);
         end = findViewById(R.id.editEndTime);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         SUNDAY = findViewById(R.id.day1);
         MONDAY = findViewById(R.id.day2);
@@ -68,7 +71,10 @@ public class EditActivity extends AppCompatActivity {
 
         cancel.setOnClickListener(v -> finish());
 
-        slider.addOnChangeListener((slider, value, fromUser) -> rate.setText(String.valueOf(value)));
+        slider.addOnChangeListener((slider, value, fromUser) -> {
+            if (value % 5 == 0) vibrator.vibrate(30);
+            rate.setText(String.valueOf(value));
+        });
 
         slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
             @Override
@@ -92,6 +98,7 @@ public class EditActivity extends AppCompatActivity {
 
         save.setOnClickListener(v -> {
             // TODO: (data validation required) Save current state and push to sever
+            finish();
         });
     }
 }

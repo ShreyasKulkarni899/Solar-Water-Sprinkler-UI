@@ -23,5 +23,6 @@ public class MainActivity extends AppCompatActivity {
         boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
         if (isFirstTime) startActivity(new Intent(MainActivity.this, SplashActivity.class));
         else startActivity(new Intent(MainActivity.this, Dashboard.class));
+        finish();
     }
 }
