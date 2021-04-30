@@ -2,6 +2,7 @@ package com.nkocet.untitled;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,12 +12,14 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.timepicker.MaterialTimePicker;
 
 public class EditActivity extends AppCompatActivity {
 
-    TextInputEditText name, location, rate;
+    TextInputEditText name, location, rate, start, end;
     Slider slider;
     Chip SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
+    MaterialTimePicker timePicker;
 
     MaterialButton save;
 
@@ -30,6 +33,8 @@ public class EditActivity extends AppCompatActivity {
         rate = findViewById(R.id.editFlowRate);
         slider = findViewById(R.id.flowRateSlider);
         save = findViewById(R.id.save);
+        start = findViewById(R.id.editStartTime);
+        end = findViewById(R.id.editEndTime);
 
         SUNDAY = findViewById(R.id.day1);
         MONDAY = findViewById(R.id.day2);
@@ -47,6 +52,20 @@ public class EditActivity extends AppCompatActivity {
         location.setText(card.location);
         rate.setText(String.valueOf(sprinkler.rate));
         slider.setValue(sprinkler.rate);
+
+        // Has bugs as of now.
+        timePicker = new MaterialTimePicker.Builder().setTitleText("Choose time").build();
+
+        start.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) timePicker.show(getSupportFragmentManager(), "Time Picker");
+        });
+        start.setOnClickListener(v -> timePicker.show(getSupportFragmentManager(), "Time picker"));
+
+        end.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) timePicker.show(getSupportFragmentManager(), "Time Picker");
+        });
+        end.setOnClickListener(v -> timePicker.show(getSupportFragmentManager(), "Time picker"));
+        //
 
         slider.addOnChangeListener((slider, value, fromUser) -> rate.setText(String.valueOf(value)));
 
