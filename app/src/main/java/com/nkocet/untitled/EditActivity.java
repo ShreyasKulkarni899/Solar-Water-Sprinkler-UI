@@ -2,8 +2,6 @@ package com.nkocet.untitled;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +19,7 @@ public class EditActivity extends AppCompatActivity {
     Chip SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
     MaterialTimePicker timePicker;
 
-    MaterialButton save;
+    MaterialButton save, cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +31,7 @@ public class EditActivity extends AppCompatActivity {
         rate = findViewById(R.id.editFlowRate);
         slider = findViewById(R.id.flowRateSlider);
         save = findViewById(R.id.save);
+        cancel = findViewById(R.id.cancel);
         start = findViewById(R.id.editStartTime);
         end = findViewById(R.id.editEndTime);
 
@@ -53,7 +52,7 @@ public class EditActivity extends AppCompatActivity {
         rate.setText(String.valueOf(sprinkler.rate));
         slider.setValue(sprinkler.rate);
 
-        // Has bugs as of now.
+        // TODO: This part of code has bugs as of now.
         timePicker = new MaterialTimePicker.Builder().setTitleText("Choose time").build();
 
         start.setOnFocusChangeListener((v, hasFocus) -> {
@@ -65,7 +64,9 @@ public class EditActivity extends AppCompatActivity {
             if (hasFocus) timePicker.show(getSupportFragmentManager(), "Time Picker");
         });
         end.setOnClickListener(v -> timePicker.show(getSupportFragmentManager(), "Time picker"));
-        //
+        // TODO: End
+
+        cancel.setOnClickListener(v -> finish());
 
         slider.addOnChangeListener((slider, value, fromUser) -> rate.setText(String.valueOf(value)));
 
@@ -90,13 +91,7 @@ public class EditActivity extends AppCompatActivity {
         if (sprinkler.activeDays[6] == 1) SATURDAY.setChecked(true);
 
         save.setOnClickListener(v -> {
-            Log.d("TAG", SUNDAY.isChecked() + "SUNDAY");
-            Log.d("TAG", MONDAY.isChecked() + "MONDAY");
-            Log.d("TAG", TUESDAY.isChecked() + "TUESDAY");
-            Log.d("TAG", WEDNESDAY.isChecked() + "WEDNESDAY");
-            Log.d("TAG", THURSDAY.isChecked() + "THURSDAY");
-            Log.d("TAG", FRIDAY.isChecked() + "FRIDAY");
-            Log.d("TAG", SATURDAY.isChecked() + "SATURDAY");
+            // TODO: (data validation required) Save current state and push to sever
         });
     }
 }
