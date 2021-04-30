@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,9 +21,18 @@ public class MainActivity extends AppCompatActivity {
         // Testing purpose only
 //        preferences.edit().clear().apply();
 
-        boolean isFirstTime = preferences.getBoolean("isFirstTime", true);
+        boolean isFirstTime = preferences.getBoolean("isFirstTime", true),
+                darkMode = preferences.getBoolean("darkMode", false),
+                bioAuth = preferences.getBoolean("bioAuth", false);
+
+        if (darkMode) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         if (isFirstTime) startActivity(new Intent(MainActivity.this, SplashActivity.class));
-        else startActivity(new Intent(MainActivity.this, Dashboard.class));
+        else {
+            if (bioAuth) startActivity(new Intent(MainActivity.this, AuthenticationActivity.class));
+            else startActivity(new Intent(MainActivity.this, Dashboard.class));
+        }
         finish();
     }
 }

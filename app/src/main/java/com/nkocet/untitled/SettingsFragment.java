@@ -1,64 +1,68 @@
 package com.nkocet.untitled;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+public class SettingsFragment extends PreferenceFragmentCompat {
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SettingsFragment extends Fragment {
+    SharedPreferences preferences;
+    SwitchPreference darkMode, bioAuth;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.preferences, rootKey);
+        preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+
+        Preference preference = findPreference("logout");
+        if (preference != null) {
+            preference.setOnPreferenceClickListener(preference1 -> {
+                requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).edit().clear().apply();
+                Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                getActivity().finish();
+                getActivity().finish();
+                return false;
+            });
+        }
+
+        darkMode = findPreference("darkMode");
+        darkMode.setChecked(preferences.getBoolean("darkMode", false));
+        darkMode.setOnPreferenceClickListener(preference1 -> {
+            if (darkMode.isChecked()) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                darkMode.setSummary("On");
+                preferences.edit().putBoolean("darkMode", true).apply();
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                darkMode.setSummary("Off");
+                preferences.edit().putBoolean("darkMode", false).apply();
+            }
+            return false;
+        });
+
+        bioAuth = findPreference("bioAuth");
+        bioAuth.setChecked(preferences.getBoolean("bioAuth", false));
+        bioAuth.setOnPreferenceClickListener(preference1 -> {
+            if (bioAuth.isChecked()) {
+                bioAuth.setSummary("Enabled");
+                preferences.edit().putBoolean("bioAuth", true).apply();
+            } else {
+                bioAuth.setSummary("Disabled");
+                preferences.edit().putBoolean("bioAuth", false).apply();
+            }
+            return false;
+        });
     }
 }

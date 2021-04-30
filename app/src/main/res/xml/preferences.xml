@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:icon="@drawable/ic_baseline_dark_mode_24"
+        android:key="darkMode"
+        android:summary="On"
+        android:title="Dark mode" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:icon="@drawable/ic_baseline_lock_24"
+        android:key="bioAuth"
+        android:summary="Disabled"
+        android:title="Fingerprint lock" />
+
+    <Preference
+        android:key="logout"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:summary="Log out of app"
+        android:title="Logout" />
+
+</PreferenceScreen>
