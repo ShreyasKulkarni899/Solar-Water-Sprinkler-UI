@@ -48,6 +48,8 @@ public class EditActivity extends AppCompatActivity {
         rate.setText(String.valueOf(sprinkler.rate));
         slider.setValue(sprinkler.rate);
 
+        slider.addOnChangeListener((slider, value, fromUser) -> rate.setText(String.valueOf(value)));
+
         slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
             @Override
             public void onStartTrackingTouch(@NonNull Slider slider) {

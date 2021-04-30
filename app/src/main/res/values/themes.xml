@@ -27,7 +27,6 @@
 
     <style name="CustomChip" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/chip_background</item>
-        <item name="android:textColor">@color/chip_text</item>
-        <item name="iconTint">@color/chip_text</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
