@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.slider.Slider;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 
@@ -23,6 +26,9 @@ public class EditActivity extends AppCompatActivity {
     MaterialTimePicker timePicker;
     Vibrator vibrator;
     SharedPreferences preferences;
+    ImageView status, back;
+    TextView title;
+    SwitchMaterial auto;
 
     MaterialButton save, cancel;
 
@@ -39,6 +45,11 @@ public class EditActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel);
         start = findViewById(R.id.editStartTime);
         end = findViewById(R.id.editEndTime);
+        status = findViewById(R.id.status);
+        back = findViewById(R.id.back);
+        title = findViewById(R.id.sprinklerName);
+        auto = findViewById(R.id.auto);
+
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         SUNDAY = findViewById(R.id.day1);
@@ -57,6 +68,18 @@ public class EditActivity extends AppCompatActivity {
         location.setText(card.location);
         rate.setText(String.valueOf(sprinkler.rate));
         slider.setValue(sprinkler.rate);
+        status.setImageResource(sprinkler.status == Sprinkler.ONLINE
+                ? R.drawable.ic_baseline_online_24
+                : R.drawable.ic_baseline_offline_24);
+        title.setText(card.name);
+
+        back.setOnClickListener(v -> finish());
+
+        auto.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            rate.setEnabled(!isChecked);
+            slider.setEnabled(!isChecked);
+        });
+
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         boolean haptics = preferences.getBoolean("haptics", true);
 

@@ -31,6 +31,7 @@ public class AddDevicesSetup extends AppCompatActivity implements CodeDialogBox.
         proceed.setOnClickListener(v -> {
             // FIXME: 25/04/21 Validation of data required before proceeding
             startActivity(new Intent(AddDevicesSetup.this, Dashboard.class));
+            finish();
         });
     }
 

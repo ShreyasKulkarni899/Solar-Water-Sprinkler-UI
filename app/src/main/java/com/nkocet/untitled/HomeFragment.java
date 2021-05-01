@@ -1,5 +1,8 @@
 package com.nkocet.untitled;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,16 +27,22 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     List<Card> cards;
     FloatingActionButton add;
-
+    SharedPreferences preferences;
     LinearLayout greetingCard;
     TextView greetText1, greetText2;
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        preferences = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+
         greetingCard = view.findViewById(R.id.greetingCard);
         greetText1 = view.findViewById(R.id.greetText1);
         greetText2 = view.findViewById(R.id.greetText2);
+
+        greetText1.setText("Hello, " + preferences.getString("name", null));
+        greetText2.setText("Weather Cloudy");
 
         cards = new ArrayList<>();
 
@@ -57,15 +66,17 @@ public class HomeFragment extends Fragment {
                 break;
         }
 
-        // Sample sprinkler
-        Sprinkler sprinkler = new Sprinkler(Sprinkler.ONLINE, 15, new int[]{1, 0, 1, 0, 1, 0, 1});
+        // Sample sprinkler_online
+        Sprinkler sprinkler_online = new Sprinkler(Sprinkler.ONLINE, 15, new int[]{1, 0, 1, 0, 1, 0, 1});
+        Sprinkler sprinkler_offline = new Sprinkler(Sprinkler.OFFLINE, 50, new int[]{0, 1, 0, 1, 1, 0, 0});
 
-        cards.add(new Card("Sprinkler 1", "Home", palette.get(0), sprinkler));
-        cards.add(new Card("Sprinkler 2", "Lawn", palette.get(1), sprinkler));
-        cards.add(new Card("Sprinkler 3", "Farm", palette.get(2), sprinkler));
-        cards.add(new Card("Sprinkler 4", "Home", palette.get(3), sprinkler));
-        cards.add(new Card("Sprinkler 5", "Lawn", palette.get(4), sprinkler));
-        cards.add(new Card("Sprinkler 6", "Farm", palette.get(5), sprinkler));
+
+        cards.add(new Card("Sprinkler 1", "Home", palette.get(0), sprinkler_online));
+        cards.add(new Card("Sprinkler 2", "Lawn", palette.get(1), sprinkler_offline));
+        cards.add(new Card("Sprinkler 3", "Farm", palette.get(2), sprinkler_online));
+        cards.add(new Card("Sprinkler 4", "Home", palette.get(3), sprinkler_online));
+        cards.add(new Card("Sprinkler 5", "Lawn", palette.get(4), sprinkler_offline));
+        cards.add(new Card("Sprinkler 6", "Farm", palette.get(5), sprinkler_online));
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));

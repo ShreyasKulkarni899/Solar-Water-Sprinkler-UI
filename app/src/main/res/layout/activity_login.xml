@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:fontFamily="monospace"
+            android:fontFamily="@font/rubik_light"
             android:text="Let's get\nyou started"
             android:textSize="24dp"
             android:textStyle="bold" />
@@ -34,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            android:fontFamily="@font/rubik_light"
             android:letterSpacing="0.07"
             android:text="Describe yourself."
             android:textColor="@color/black"
@@ -56,6 +57,7 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_light"
                 android:hint="Name"
                 android:maxLength="20"
                 android:inputType="textCapWords" />
@@ -76,6 +78,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneTextView"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/rubik_light"
                 android:layout_height="wrap_content"
                 android:hint="Phone"
                 android:maxLength="10"
@@ -95,6 +98,7 @@
                 android:id="@+id/emailTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_light"
                 android:hint="Email"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -116,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:inputType="numberPassword"
+                android:fontFamily="@font/rubik_light"
                 android:maxLength="4" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,6 +44,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.location.setText(cards.get(position).location);
         holder.cardBody.setBackgroundColor(Color.parseColor(cards.get(position).cardBackgroundColor));
         holder.cardBottom.setBackgroundColor(Color.parseColor(cards.get(position).cardBottomColor));
+        holder.status.setImageResource(cards.get(position).sprinkler.status == Sprinkler.ONLINE ?
+                R.drawable.ic_baseline_online_24
+                : R.drawable.ic_baseline_offline_24);
 
         holder.card.setOnClickListener(v -> {
             Intent intent = new Intent(context, EditActivity.class);
@@ -63,6 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         RelativeLayout cardBody;
         LinearLayout cardBottom;
         MaterialCardView card;
+        ImageView status;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             card = itemView.findViewById(R.id.card);
             cardBody = itemView.findViewById(R.id.cardBody);
             cardBottom = itemView.findViewById(R.id.cardBottom);
+            status = itemView.findViewById(R.id.status);
         }
     }
 }

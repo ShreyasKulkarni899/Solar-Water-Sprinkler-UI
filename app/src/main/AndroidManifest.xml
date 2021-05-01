@@ -11,19 +11,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Untitled">
-        <activity android:name=".EditActivity"></activity>
-        <activity android:name=".Dashboard" />
-        <activity android:name=".AuthenticationActivity" />
-        <activity android:name=".AddDevicesSetup" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".EditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Dashboard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AuthenticationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddDevicesSetup"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

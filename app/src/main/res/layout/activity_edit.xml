@@ -42,11 +42,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_baseline_circle_24" />
+                    android:src="@drawable/ic_baseline_online_24" />
 
                 <TextView
+                    android:id="@+id/sprinklerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/rubik_light"
                     android:text="Sprinkler 1"
                     android:textSize="18dp"
                     android:textStyle="bold" />
@@ -79,6 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_light"
             android:layout_marginTop="20dp"
             android:text="Edit device"
             android:textSize="18dp" />
@@ -95,6 +98,7 @@
             app:startIconDrawable="@drawable/ic_baseline_edit_note_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:fontFamily="@font/rubik_light"
                 android:id="@+id/editDeviceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,6 +119,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editDeviceLocation"
+                android:fontFamily="@font/rubik_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location" />
@@ -132,6 +137,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editFlowRate"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/rubik_light"
                 android:layout_height="wrap_content"
                 android:hint="Rate" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -279,6 +285,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Automatic mode"
+                    android:fontFamily="@font/rubik_light"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -286,6 +293,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Use predefined settings"
+                    android:fontFamily="@font/rubik_light"
                     android:textSize="12dp" />
 
             </LinearLayout>
@@ -293,9 +301,10 @@
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:id="@+id/auto"
                 android:layout_gravity="end"
-                android:labelFor="@+id/auto" />
+                android:layout_alignParentRight="true"
+                app:useMaterialThemeColors="true" />
 
         </RelativeLayout>
 
