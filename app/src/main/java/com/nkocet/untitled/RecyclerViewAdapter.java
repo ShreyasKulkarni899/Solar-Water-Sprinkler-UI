@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
+
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -42,14 +44,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cardBody.setBackgroundColor(Color.parseColor(cards.get(position).cardBackgroundColor));
         holder.cardBottom.setBackgroundColor(Color.parseColor(cards.get(position).cardBottomColor));
 
-        holder.cardBody.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, EditActivity.class);
-                intent.putExtra("card", cards.get(position));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
+        holder.card.setOnClickListener(v -> {
+            Intent intent = new Intent(context, EditActivity.class);
+            intent.putExtra("card", cards.get(position));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
     }
 
@@ -63,11 +62,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView name, location;
         RelativeLayout cardBody;
         LinearLayout cardBottom;
+        MaterialCardView card;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.cardName);
             location = itemView.findViewById(R.id.cardLocation);
+            card = itemView.findViewById(R.id.card);
             cardBody = itemView.findViewById(R.id.cardBody);
             cardBottom = itemView.findViewById(R.id.cardBottom);
         }

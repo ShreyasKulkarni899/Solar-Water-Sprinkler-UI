@@ -1,54 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <PreferenceCategory android:title="General">
+
+    <PreferenceCategory android:title="General" />
+
     <SwitchPreference
         android:defaultValue="true"
         android:icon="@drawable/ic_baseline_dark_mode_24"
         android:key="darkMode"
         android:summary="On"
         android:title="Dark mode" />
-    </PreferenceCategory>
 
-    <PreferenceCategory android:title="Privacy">
     <SwitchPreference
         android:defaultValue="false"
         android:icon="@drawable/ic_baseline_lock_24"
         android:key="bioAuth"
         android:summary="Disabled"
         android:title="Fingerprint lock" />
-    </PreferenceCategory>
 
+    <SwitchPreference
+        android:defaultValue="true"
+        android:icon="@drawable/ic_baseline_vibration_24"
+        android:key="haptics"
+        android:summary="Enabled"
+        android:title="Haptic feedback" />
 
-    <PreferenceCategory android:title="Remote Settings">
-        <EditTextPreference
-            android:summary="10"
-            android:title="Number of Sprinkler"
-            android:key="noOfSprinkler"
-            android:icon="@drawable/ic_baseline_shower_24"/>
+    <PreferenceCategory android:title="Application" />
 
-        <EditTextPreference
-            android:summary="2"
-            android:title="Number of Pumps"
-            android:key="noOfPumps"
-            android:icon="@drawable/ic_baseline_shower_24"/>
-
-        <EditTextPreference
-            android:summary="2"
-            android:title="Number of Solenoid Valve"
-            android:key="noOfValve"
-            android:icon="@drawable/ic_baseline_shower_24"/>
-
-
-    </PreferenceCategory>
-    <PreferenceCategory android:title="Exit">
     <Preference
-        android:key="logout"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:key="contact"
+        android:summary="Write a feedback"
+        android:title="Contact us" />
+
+    <Preference
+        android:icon="@drawable/ic_baseline_info_24"
+        android:key="help"
+        android:summary="@string/app_version"
+        android:title="App version" />
+
+    <Preference
         android:icon="@drawable/ic_baseline_logout_24"
+        android:key="logout"
         android:summary="Log out of app"
         android:title="Logout" />
-    </PreferenceCategory>
 
 
 </PreferenceScreen>

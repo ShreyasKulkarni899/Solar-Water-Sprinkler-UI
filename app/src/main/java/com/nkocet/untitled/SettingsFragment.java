@@ -3,13 +3,10 @@ package com.nkocet.untitled;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
-
-import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
@@ -17,13 +14,11 @@ import androidx.preference.SwitchPreference;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     SharedPreferences preferences;
-    SwitchPreference darkMode, bioAuth;
-    EditTextPreference noOfSprinkler , noOfPumps , noOfValve;
-
+    SwitchPreference darkMode, bioAuth, haptics;
+    Preference logout, appInfo;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -31,9 +26,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.preferences, rootKey);
         preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
 
-        Preference preference = findPreference("logout");
-        if (preference != null) {
-            preference.setOnPreferenceClickListener(preference1 -> {
+        logout = findPreference("logout");
+        if (logout != null) {
+            logout.setOnPreferenceClickListener(preference1 -> {
                 requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).edit().clear().apply();
                 Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), MainActivity.class));
@@ -71,11 +66,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             return false;
         });
 
-
-
-
+        haptics = findPreference("haptics");
+        haptics.setChecked(preferences.getBoolean("haptics", true));
+        haptics.setOnPreferenceClickListener(preference1 -> {
+            if (haptics.isChecked()) {
+                haptics.setSummary("Enabled");
+                preferences.edit().putBoolean("haptics", true).apply();
+            } else {
+                haptics.setSummary("Disabled");
+                preferences.edit().putBoolean("haptics", false).apply();
+            }
+            return false;
+        });
     }
-
-
-
 }

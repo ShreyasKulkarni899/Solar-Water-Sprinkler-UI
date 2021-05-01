@@ -1,290 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="30dp"
-    android:orientation="vertical"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="30dp"
+    android:scrollIndicators="bottom"
+    android:scrollbars="none"
     tools:context=".EditActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:text="Customise\nyour device"
-        android:textSize="24dp"
-        android:textStyle="bold" />
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_baseline_circle_24" />
+                android:layout_centerVertical="true"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Online"
-                android:textSize="16dp" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/back"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_baseline_circle_24" />
 
-        <ImageButton
-            android:id="@+id/edit_power_off"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sprinkler 1"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/edit_power_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/delete"
+                android:background="?android:selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_baseline_power_settings_new_24"
+                android:tooltipText="Power off" />
+
+            <ImageButton
+                android:id="@+id/delete"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="?android:selectableItemBackground"
+                android:padding="10dp"
+                android:src="@drawable/ic_round_delete_24"
+                android:tooltipText="Delete" />
+
+        </RelativeLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="?android:selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_baseline_power_settings_new_24"
-            android:tooltipText="Power off" />
-
-        <ImageButton
-            android:id="@+id/delete"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/edit_power_off"
-            android:background="?android:selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_round_delete_24"
-            android:tooltipText="Delete" />
-
-        <ImageButton
-            android:id="@+id/auto"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/delete"
-            android:background="?android:selectableItemBackground"
-            android:padding="10dp"
-            android:src="@drawable/ic_baseline_auto_fix_high_24"
-            android:tooltipText="Auto" />
-    </RelativeLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="20"
-        app:errorEnabled="true"
-        app:startIconDrawable="@drawable/ic_baseline_edit_note_24">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editDeviceName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name"
-            android:inputType="textCapWords" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:counterEnabled="true"
-        app:counterMaxLength="20"
-        app:errorEnabled="true"
-        app:helperText="Set a location"
-        app:startIconDrawable="@drawable/ic_baseline_my_location_24">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editDeviceLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Location" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="20"
-        app:errorEnabled="true"
-        app:helperText="Set a rate"
-        app:startIconDrawable="@drawable/ic_baseline_shower_24">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editFlowRate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Rate" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.slider.Slider
-        android:id="@+id/flowRateSlider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:stepSize="5"
-        android:valueFrom="0"
-        android:valueTo="100"
-        app:thumbElevation="0dp"
-        app:thumbRadius="8dp"
-        app:tickVisible="false"
-        app:trackHeight="10dp" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+            android:layout_marginTop="20dp"
+            android:text="Edit device"
+            android:textSize="18dp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="160sp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Start Time"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/parent"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayout"
-            app:startIconDrawable="@drawable/ic_round_access_time_24">
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_edit_note_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editStartTime"
+                android:id="@+id/editDeviceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:inputType="date"
-                android:maxLength="10" />
+                android:hint="Name"
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="160sp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="End Time"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:startIconDrawable="@drawable/ic_round_access_time_24">
+            android:layout_gravity="center"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:errorEnabled="true"
+            app:helperText="Set a location"
+            app:startIconDrawable="@drawable/ic_baseline_my_location_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editEndTime"
+                android:id="@+id/editDeviceLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:inputType="date"
-                android:maxLength="10" />
+                android:hint="Location" />
         </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:helperText="Set a rate"
+            app:startIconDrawable="@drawable/ic_baseline_shower_24">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Repeat every" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editFlowRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Rate" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.chip.ChipGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        <com.google.android.material.slider.Slider
+            android:id="@+id/flowRateSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:stepSize="5"
+            android:valueFrom="0"
+            android:valueTo="100"
+            app:thumbElevation="0dp"
+            app:thumbRadius="8dp"
+            app:tickVisible="false"
+            app:trackHeight="10dp" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/day1"
-            style="@style/CustomChip"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="160sp"
+                android:layout_height="wrap_content"
+                android:hint="Start Time"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/parent"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout"
+                app:startIconDrawable="@drawable/ic_round_access_time_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editStartTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="date"
+                    android:maxLength="10" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="160sp"
+                android:layout_height="wrap_content"
+                android:hint="End Time"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:startIconDrawable="@drawable/ic_round_access_time_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editEndTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="date"
+                    android:maxLength="10" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sunday" />
+            android:layout_marginTop="20dp"
+            android:text="Repeat every" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/day2"
-            style="@style/CustomChip"
-            android:layout_width="wrap_content"
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Monday" />
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/day3"
-            style="@style/CustomChip"
-            android:layout_width="wrap_content"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/day1"
+                style="@style/CustomChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunday" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/day2"
+                style="@style/CustomChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/day3"
+                style="@style/CustomChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/day4"
+                style="@style/CustomChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/day5"
+                style="@style/CustomChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thursday" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/day6"
+                style="@style/CustomChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Friday" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/day7"
+                style="@style/CustomChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Saturday" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tuesday" />
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/day4"
-            style="@style/CustomChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wednesday" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/day5"
-            style="@style/CustomChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thursday" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Automatic mode"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/day6"
-            style="@style/CustomChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Friday" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Use predefined settings"
+                    android:textSize="12dp" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/day7"
-            style="@style/CustomChip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Saturday" />
-    </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:labelFor="@+id/auto" />
+
+        </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/save"
+            android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="160dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:text="Save" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="160dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
             android:text="Cancel" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>

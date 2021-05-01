@@ -1,6 +1,8 @@
 package com.nkocet.untitled;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 
@@ -20,6 +22,7 @@ public class EditActivity extends AppCompatActivity {
     Chip SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
     MaterialTimePicker timePicker;
     Vibrator vibrator;
+    SharedPreferences preferences;
 
     MaterialButton save, cancel;
 
@@ -54,6 +57,8 @@ public class EditActivity extends AppCompatActivity {
         location.setText(card.location);
         rate.setText(String.valueOf(sprinkler.rate));
         slider.setValue(sprinkler.rate);
+        preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        boolean haptics = preferences.getBoolean("haptics", true);
 
         // TODO: This part of code has bugs as of now.
         timePicker = new MaterialTimePicker.Builder().setTitleText("Choose time").build();
@@ -70,9 +75,8 @@ public class EditActivity extends AppCompatActivity {
         // TODO: End
 
         cancel.setOnClickListener(v -> finish());
-
         slider.addOnChangeListener((slider, value, fromUser) -> {
-            if (value % 5 == 0) vibrator.vibrate(30);
+            if (value % 5 == 0 && haptics) vibrator.vibrate(30);
             rate.setText(String.valueOf(value));
         });
 
