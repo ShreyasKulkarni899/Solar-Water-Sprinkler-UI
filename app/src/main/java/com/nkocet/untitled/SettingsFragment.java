@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
@@ -17,6 +18,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     SharedPreferences preferences;
     SwitchPreference darkMode, bioAuth;
+    EditTextPreference noOfSprinkler , noOfPumps , noOfValve;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -71,8 +73,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
 
 
-    }
 
+    }
 
 
 
