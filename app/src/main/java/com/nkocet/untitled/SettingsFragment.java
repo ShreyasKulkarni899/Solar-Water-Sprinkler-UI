@@ -3,10 +3,12 @@ package com.nkocet.untitled;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
+
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
@@ -16,8 +18,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     SharedPreferences preferences;
     SwitchPreference darkMode, bioAuth;
 
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -64,5 +68,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
             return false;
         });
+
+
+
     }
+
+
+
+
 }
