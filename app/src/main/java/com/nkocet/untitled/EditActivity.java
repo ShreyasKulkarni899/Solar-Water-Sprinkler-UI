@@ -155,6 +155,7 @@ public class EditActivity extends AppCompatActivity {
             database.delete(card);
             setResult(2);
             finish();
+            // comm
         });
     }
 }
