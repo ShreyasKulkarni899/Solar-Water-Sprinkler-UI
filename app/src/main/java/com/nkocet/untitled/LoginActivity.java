@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                             .apply();
                     Log.d("Login Activity", "onCreate: Done saving!");
 
-                    startActivity(new Intent(LoginActivity.this, AddDevicesSetup.class));
+                    startActivity(new Intent(LoginActivity.this, Dashboard.class));
                     finish();
                 }
             }

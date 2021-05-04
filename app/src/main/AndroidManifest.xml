@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Untitled">
-        <activity android:name=".AddDevice"></activity>
+        <activity android:name=".AddDevice" />
         <activity
             android:name=".EditActivity"
             android:screenOrientation="portrait" />
@@ -21,9 +21,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AuthenticationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AddDevicesSetup"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
