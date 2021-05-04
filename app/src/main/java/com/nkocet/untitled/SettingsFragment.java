@@ -30,6 +30,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         if (logout != null) {
             logout.setOnPreferenceClickListener(preference1 -> {
                 requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE).edit().clear().apply();
+                getContext().deleteDatabase("database.db");
                 Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
@@ -39,7 +40,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         darkMode = findPreference("darkMode");
-        darkMode.setChecked(preferences.getBoolean("darkMode", false));
+        boolean isDarkMode = preferences.getBoolean("darkMode", false);
+        darkMode.setChecked(isDarkMode);
+        darkMode.setSummary(isDarkMode ? "On" : "Off");
+
         darkMode.setOnPreferenceClickListener(preference1 -> {
             if (darkMode.isChecked()) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);

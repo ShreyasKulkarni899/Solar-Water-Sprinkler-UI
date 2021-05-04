@@ -16,14 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     Context context;
-    List<Card> cards;
+    ArrayList<Card> cards;
 
-    public RecyclerViewAdapter(Context context, List<Card> cards) {
+    public RecyclerViewAdapter(Context context, ArrayList<Card> cards) {
         this.context = context;
         this.cards = cards;
     }
@@ -59,6 +60,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return cards.size();
+    }
+
+    public void updateReceiptsList(ArrayList<Card> cards) {
+        this.cards = cards;
+        this.notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

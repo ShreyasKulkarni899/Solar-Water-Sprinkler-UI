@@ -1,31 +1,54 @@
 package com.nkocet.untitled;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 
-public class AddDevicesSetup extends AppCompatActivity implements CodeDialogBox.DialogBoxListener {
+import java.util.ArrayList;
 
-    MaterialCardView addDevCard;
-    MaterialButton proceed;
+public class AddDevicesSetup extends AppCompatActivity /*implements CodeDialogBox.DialogBoxListener*/ {
+
+    MaterialButton addDevice, proceed;
+    RecyclerView recyclerView;
+    SharedPreferences preferences;
+    String code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_devices_setup);
 
-        addDevCard = findViewById(R.id.addDevice);
+        addDevice = findViewById(R.id.addDevice);
         proceed = findViewById(R.id.proceed3);
+        preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        if (preferences.getBoolean("darkMode", false))
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        addDevCard.setOnClickListener(v -> {
+//        recyclerView = findViewById(R.id.recycler_view_setup);
+
+        ArrayList<Card> cards = new ArrayList<>();
+
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        recyclerView.setAdapter(new RecyclerViewAdapter(this, cards));
+
+        addDevice.setOnClickListener(v -> {
             // Dialog box asking to enter 6 digit code, pops up
-            CodeDialogBox codeDialogBox = new CodeDialogBox();
-            codeDialogBox.show(getSupportFragmentManager(), "Add devices");
+//            CodeDialogBox codeDialogBox = new CodeDialogBox();
+//            codeDialogBox.show(getSupportFragmentManager(), "Add devices");
+//            if (code != null) {
+            // TODO: Connection code
+            Intent intent = new Intent(this, AddDevice.class);
+            intent.putExtra(code, "code");
+            startActivity(intent);
+//            }
         });
 
         proceed.setOnClickListener(v -> {
@@ -35,8 +58,8 @@ public class AddDevicesSetup extends AppCompatActivity implements CodeDialogBox.
         });
     }
 
-    @Override
-    public void getCode(String code) {
-        Toast.makeText(this, code, Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void getCode(String code) {
+//        this.code = code;
+//    }
 }

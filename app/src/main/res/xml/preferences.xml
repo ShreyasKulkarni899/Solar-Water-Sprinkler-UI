@@ -7,10 +7,10 @@
     <PreferenceCategory android:title="General" />
 
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:icon="@drawable/ic_baseline_dark_mode_24"
         android:key="darkMode"
-        android:summary="On"
+        android:summary="Off"
         android:title="Dark mode" />
 
     <SwitchPreference

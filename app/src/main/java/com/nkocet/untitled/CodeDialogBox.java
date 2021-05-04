@@ -21,6 +21,7 @@ public class CodeDialogBox extends AppCompatDialogFragment {
     /* This part of code is responsible for showing a dialog box
      * that takes a 6 digit code as input */
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
@@ -39,7 +40,6 @@ public class CodeDialogBox extends AppCompatDialogFragment {
                     }
                 })
                 .setNegativeButton("Cancel", (dialog12, which) -> {
-
                 });
         return dialog.create();
     }

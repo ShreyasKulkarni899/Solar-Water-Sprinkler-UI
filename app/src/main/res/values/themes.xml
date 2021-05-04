@@ -29,4 +29,5 @@
         <item name="chipBackgroundColor">@color/chip_background</item>
         <item name="android:textColor">@color/chip_text</item>
     </style>
+
 </resources>

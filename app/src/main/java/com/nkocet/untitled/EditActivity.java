@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,16 +30,18 @@ public class EditActivity extends AppCompatActivity {
     Vibrator vibrator;
     SharedPreferences preferences;
     ImageView status, back;
+    ImageButton delete, power_off;
     TextView title;
     SwitchMaterial auto;
-
     MaterialButton save, cancel;
+    Database database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
+        database = new Database(getBaseContext());
         name = findViewById(R.id.editDeviceName);
         location = findViewById(R.id.editDeviceLocation);
         rate = findViewById(R.id.editFlowRate);
@@ -49,6 +54,8 @@ public class EditActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         title = findViewById(R.id.sprinklerName);
         auto = findViewById(R.id.auto);
+        delete = findViewById(R.id.delete);
+        power_off = findViewById(R.id.power_off);
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -68,22 +75,38 @@ public class EditActivity extends AppCompatActivity {
         location.setText(card.location);
         rate.setText(String.valueOf(sprinkler.rate));
         slider.setValue(sprinkler.rate);
+
         status.setImageResource(sprinkler.status == Sprinkler.ONLINE
                 ? R.drawable.ic_baseline_online_24
                 : R.drawable.ic_baseline_offline_24);
-        title.setText(card.name);
+
+        title.setText(sprinkler.status == Sprinkler.ONLINE
+                ? "Online"
+                : "Offline");
 
         back.setOnClickListener(v -> finish());
+
+        auto.setChecked(sprinkler.auto);
 
         auto.setOnCheckedChangeListener((buttonView, isChecked) -> {
             rate.setEnabled(!isChecked);
             slider.setEnabled(!isChecked);
         });
 
+        delete.setOnClickListener(v -> {
+            database.delete(card);
+            Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+            finish();
+        });
+
+//        power_off.setOnClickListener(v -> {
+//             TODO: Power off device
+//        });
+
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         boolean haptics = preferences.getBoolean("haptics", true);
 
-        // TODO: This part of code has bugs as of now.
+        // FIXME: This part of code has bugs as of now.
         timePicker = new MaterialTimePicker.Builder().setTitleText("Choose time").build();
 
         start.setOnFocusChangeListener((v, hasFocus) -> {
@@ -95,7 +118,7 @@ public class EditActivity extends AppCompatActivity {
             if (hasFocus) timePicker.show(getSupportFragmentManager(), "Time Picker");
         });
         end.setOnClickListener(v -> timePicker.show(getSupportFragmentManager(), "Time picker"));
-        // TODO: End
+        // FIXME: End
 
         cancel.setOnClickListener(v -> finish());
         slider.addOnChangeListener((slider, value, fromUser) -> {
@@ -125,6 +148,12 @@ public class EditActivity extends AppCompatActivity {
 
         save.setOnClickListener(v -> {
             // TODO: (data validation required) Save current state and push to sever
+            finish();
+        });
+
+        delete.setOnClickListener(v -> {
+            database.delete(card);
+            setResult(2);
             finish();
         });
     }
