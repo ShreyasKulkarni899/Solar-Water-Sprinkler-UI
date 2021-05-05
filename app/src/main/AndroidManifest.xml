@@ -7,12 +7,14 @@
 
     <application
         android:allowBackup="true"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Untitled">
-        <activity android:name=".AddDevice"></activity>
+        <activity android:name=".ListViewActivity"></activity>
+        <activity android:name=".AddDevice" />
         <activity
             android:name=".EditActivity"
             android:screenOrientation="portrait" />
