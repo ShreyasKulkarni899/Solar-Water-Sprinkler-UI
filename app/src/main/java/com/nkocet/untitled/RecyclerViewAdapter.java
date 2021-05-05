@@ -49,10 +49,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 R.drawable.ic_baseline_online_24
                 : R.drawable.ic_baseline_offline_24);
 
+        // FIXME: 05/05/2021
         holder.card.setOnClickListener(v -> {
+
+            Toast.makeText(context, "before activity", Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(context, EditActivity.class);
+
+            Toast.makeText(context, "after activity", Toast.LENGTH_SHORT).show();
+
             intent.putExtra("card", cards.get(position));
             context.startActivity(intent);
+
         });
     }
 

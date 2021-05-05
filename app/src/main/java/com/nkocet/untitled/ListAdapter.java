@@ -1,13 +1,13 @@
 package com.nkocet.untitled;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,8 +42,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ListModel current = objectList.get(position);
-        holder.layout.setOnClickListener(v -> Toast.makeText(context, "Clicked " + holder.title.getText().toString(), Toast.LENGTH_SHORT).show());
         holder.setData(current, position);
+        holder.layout.setOnClickListener(v -> context.startActivity(new Intent(context, CropDetailsPane.class)
+                .putExtra("object", holder.currentObject)));
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
