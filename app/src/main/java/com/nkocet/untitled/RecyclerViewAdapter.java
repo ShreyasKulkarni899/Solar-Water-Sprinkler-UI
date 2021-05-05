@@ -1,7 +1,7 @@
 package com.nkocet.untitled;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,9 +22,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     ArrayList<Card> cards;
+    Activity activity;
+    CardClickListener listener;
 
-    public RecyclerViewAdapter(Context context, ArrayList<Card> cards) {
+    public RecyclerViewAdapter(Context context, ArrayList<Card> cards, CardClickListener listener) {
         this.context = context;
+        this.listener = listener;
         this.cards = cards;
     }
 
@@ -35,7 +37,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View view;
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.card, parent, false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, listener);
     }
 
     @Override
@@ -45,23 +47,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.location.setText(cards.get(position).location);
         holder.cardBody.setBackgroundColor(Color.parseColor(cards.get(position).cardBackgroundColor));
         holder.cardBottom.setBackgroundColor(Color.parseColor(cards.get(position).cardBottomColor));
-        holder.status.setImageResource(cards.get(position).sprinkler.status == Sprinkler.ONLINE ?
-                R.drawable.ic_baseline_online_24
+        holder.status.setImageResource(cards.get(position).sprinkler.status == Sprinkler.ONLINE
+                ? R.drawable.ic_baseline_online_24
                 : R.drawable.ic_baseline_offline_24);
 
-        // FIXME: 05/05/2021
-        holder.card.setOnClickListener(v -> {
-
-            Toast.makeText(context, "before activity", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(context, EditActivity.class);
-
-            Toast.makeText(context, "after activity", Toast.LENGTH_SHORT).show();
-
-            intent.putExtra("card", cards.get(position));
-            context.startActivity(intent);
-
-        });
     }
 
     @Override
@@ -69,21 +58,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return cards.size();
     }
 
-    public void updateReceiptsList(ArrayList<Card> cards) {
-        this.cards = cards;
-        this.notifyDataSetChanged();
-    }
-
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView name, location;
         RelativeLayout cardBody;
         LinearLayout cardBottom;
         MaterialCardView card;
         ImageView status;
+        CardClickListener listener;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, CardClickListener listener) {
             super(itemView);
             name = itemView.findViewById(R.id.cardName);
             location = itemView.findViewById(R.id.cardLocation);
@@ -91,6 +75,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             cardBody = itemView.findViewById(R.id.cardBody);
             cardBottom = itemView.findViewById(R.id.cardBottom);
             status = itemView.findViewById(R.id.status);
+            this.listener = listener;
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.onCardClick(getAdapterPosition());
+        }
+    }
+
+    public interface CardClickListener {
+        void onCardClick(int position);
     }
 }
