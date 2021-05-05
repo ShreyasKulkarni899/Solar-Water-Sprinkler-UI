@@ -14,7 +14,7 @@ public class ListViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lst_recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.lst_recyclerView);
         ListAdapter adapter = new ListAdapter(this,ListModel.getObjectList());
         recyclerView.setAdapter(adapter);
 
