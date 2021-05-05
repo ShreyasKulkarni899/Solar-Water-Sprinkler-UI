@@ -42,12 +42,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ListModel current = objectList.get(position);
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Clicked " + holder.title.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        holder.layout.setOnClickListener(v -> Toast.makeText(context, "Clicked " + holder.title.getText().toString(), Toast.LENGTH_SHORT).show());
         holder.setData(current, position);
     }
 
@@ -67,8 +62,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         }
 
         public void setData(ListModel current, int position) {
-            this.title.setText(current.getTitle());
-            this.imgThumb.setImageResource(current.getImageId());
+            this.title.setText(current.title);
+            this.imgThumb.setImageResource(current.imageId);
             this.position = position;
             this.currentObject = current;
         }
