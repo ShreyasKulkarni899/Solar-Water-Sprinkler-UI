@@ -20,7 +20,12 @@ public class CropGuideFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crop_guide, container, false);
 
         ArrayList<ListModel> crops = new ArrayList<>();
-        crops.add(new ListModel(R.drawable.image_1, "Picture 1"));
+        crops.add(new ListModel(R.drawable.image_1, "Picture 1", "Demo description.\nlorem-ipsum ..."));
+        crops.add(new ListModel(R.drawable.image_1, "Picture 2", "Demo description.\nlorem-ipsum ..."));
+        crops.add(new ListModel(R.drawable.image_1, "Picture 3", "Demo description.\nlorem-ipsum ..."));
+        crops.add(new ListModel(R.drawable.image_1, "Picture 4", "Demo description.\nlorem-ipsum ..."));
+        crops.add(new ListModel(R.drawable.image_1, "Picture 5", "Demo description.\nlorem-ipsum ..."));
+        crops.add(new ListModel(R.drawable.image_1, "Picture 6", "Demo description.\nlorem-ipsum ..."));
         // Similarly add more objects to list
         // Or fetch from database
 
