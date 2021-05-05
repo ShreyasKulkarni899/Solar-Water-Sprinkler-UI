@@ -22,7 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardClickListener {
 
     RecyclerView recyclerView;
     ArrayList<Card> cards;
@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
     RecyclerViewAdapter adapter;
     Database database;
     int nightModeFlag;
-    static int DONE = 1;
+    static int UPDATE_RECYCLER_VIEW = 1;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -55,23 +55,23 @@ public class HomeFragment extends Fragment {
         updateGreetCard();
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter(getActivity(), cards);
+        adapter = new RecyclerViewAdapter(getContext(), cards, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         add = view.findViewById(R.id.addDeviceFAB);
-        add.setOnClickListener(v -> startActivityForResult(new Intent(getActivity(), AddDevice.class), 2));
+        add.setOnClickListener(v -> startActivityForResult(new Intent(getActivity(), AddDevice.class), UPDATE_RECYCLER_VIEW));
         return view;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2) {
+        if (requestCode == UPDATE_RECYCLER_VIEW) {
+            Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
             nightModeFlag = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             cards = database.toggleDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
-            adapter.updateReceiptsList(cards);
-            Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
+            adapter.notifyDataSetChanged();
             updateGreetCard();
         }
     }
@@ -84,5 +84,10 @@ public class HomeFragment extends Fragment {
             greetText1.setText("Hello, " + preferences.getString("name", null));
             greetText2.setText("Rain expected in 30 mins");
         }
+    }
+
+    @Override
+    public void onCardClick(int position) {
+        startActivityForResult(new Intent(getContext(), EditActivity.class).putExtra("card", cards.get(position)), UPDATE_RECYCLER_VIEW);
     }
 }

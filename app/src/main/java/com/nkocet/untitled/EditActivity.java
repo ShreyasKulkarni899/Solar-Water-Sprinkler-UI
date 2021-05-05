@@ -2,6 +2,7 @@ package com.nkocet.untitled;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.widget.ImageButton;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
@@ -37,6 +39,7 @@ public class EditActivity extends AppCompatActivity {
     MaterialButton saveButton, cancelButton;
     Database database;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,24 +153,26 @@ public class EditActivity extends AppCompatActivity {
             };
 
             int rateInt = (int) slider.getValue();
-            int[] activeDays = {SUNDAY.isChecked() ? 1 : 0,
+            int[] activeDays = {
+                    SUNDAY.isChecked() ? 1 : 0,
                     MONDAY.isChecked() ? 1 : 0,
                     TUESDAY.isChecked() ? 1 : 0,
                     WEDNESDAY.isChecked() ? 1 : 0,
                     THURSDAY.isChecked() ? 1 : 0,
                     FRIDAY.isChecked() ? 1 : 0,
-                    SATURDAY.isChecked() ? 1 : 0};
+                    SATURDAY.isChecked() ? 1 : 0
+            };
 
             Sprinkler sprinklerFinal = new Sprinkler(1, rateInt, activeDays, autoSwitch.isChecked());
             Card finalCard = new Card(database.getLastId(), nameString, locationString, colors, sprinklerFinal);
             database.edit(card, finalCard);
-            setResult(2);
+            setResult(HomeFragment.UPDATE_RECYCLER_VIEW);
             finish();
         });
 
         deleteButton.setOnClickListener(v -> {
             database.delete(card);
-            setResult(2);
+            setResult(HomeFragment.UPDATE_RECYCLER_VIEW);
             finish();
         });
     }
