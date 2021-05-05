@@ -1,11 +1,9 @@
 package com.nkocet.untitled;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,20 +18,23 @@ import com.google.android.material.slider.Slider;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
+
+import java.util.Objects;
 
 public class EditActivity extends AppCompatActivity {
 
-    TextInputEditText name, location, rate, start, end;
+    TextInputEditText nameEditText, locationEditText, rateEditText, startEditText, endEditText;
     Slider slider;
     Chip SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
     MaterialTimePicker timePicker;
     Vibrator vibrator;
     SharedPreferences preferences;
     ImageView status, back;
-    ImageButton delete, power_off;
+    ImageButton deleteButton, power_off_button;
     TextView title;
-    SwitchMaterial auto;
-    MaterialButton save, cancel;
+    SwitchMaterial autoSwitch;
+    MaterialButton saveButton, cancelButton;
     Database database;
 
     @Override
@@ -42,20 +43,20 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         database = new Database(getBaseContext());
-        name = findViewById(R.id.editDeviceName);
-        location = findViewById(R.id.editDeviceLocation);
-        rate = findViewById(R.id.editFlowRate);
+        nameEditText = findViewById(R.id.editDeviceName);
+        locationEditText = findViewById(R.id.editDeviceLocation);
+        rateEditText = findViewById(R.id.editFlowRate);
         slider = findViewById(R.id.flowRateSlider);
-        save = findViewById(R.id.save);
-        cancel = findViewById(R.id.cancel);
-        start = findViewById(R.id.editStartTime);
-        end = findViewById(R.id.editEndTime);
+        saveButton = findViewById(R.id.save);
+        cancelButton = findViewById(R.id.cancel);
+        startEditText = findViewById(R.id.editStartTime);
+        endEditText = findViewById(R.id.editEndTime);
         status = findViewById(R.id.status);
         back = findViewById(R.id.back);
         title = findViewById(R.id.sprinklerName);
-        auto = findViewById(R.id.auto);
-        delete = findViewById(R.id.delete);
-        power_off = findViewById(R.id.power_off);
+        autoSwitch = findViewById(R.id.auto);
+        deleteButton = findViewById(R.id.delete);
+        power_off_button = findViewById(R.id.power_off);
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -67,13 +68,13 @@ public class EditActivity extends AppCompatActivity {
         FRIDAY = findViewById(R.id.day6);
         SATURDAY = findViewById(R.id.day7);
 
-        Intent intent = getIntent();
-        Card card = (Card) intent.getSerializableExtra("card");
+        Card card = (Card) getIntent().getSerializableExtra("card");
         Sprinkler sprinkler = card.sprinkler;
 
-        name.setText(card.name);
-        location.setText(card.location);
-        rate.setText(String.valueOf(sprinkler.rate));
+        nameEditText.setText(card.name);
+        locationEditText.setText(card.location);
+        rateEditText.setText(String.valueOf(sprinkler.rate));
+        rateEditText.setEnabled(false);
         slider.setValue(sprinkler.rate);
 
         status.setImageResource(sprinkler.status == Sprinkler.ONLINE
@@ -86,44 +87,35 @@ public class EditActivity extends AppCompatActivity {
 
         back.setOnClickListener(v -> finish());
 
-        auto.setChecked(sprinkler.auto);
+        autoSwitch.setChecked(sprinkler.auto);
 
-        auto.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            rate.setEnabled(!isChecked);
-            slider.setEnabled(!isChecked);
-        });
+        // TODO: Auto mode implementation here
+        autoSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> slider.setEnabled(!isChecked));
 
-        delete.setOnClickListener(v -> {
+        deleteButton.setOnClickListener(v -> {
             database.delete(card);
             Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
             finish();
         });
 
-//        power_off.setOnClickListener(v -> {
-//             TODO: Power off device
-//        });
-
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         boolean haptics = preferences.getBoolean("haptics", true);
 
-        // FIXME: This part of code has bugs as of now.
-        timePicker = new MaterialTimePicker.Builder().setTitleText("Choose time").build();
-
-        start.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) timePicker.show(getSupportFragmentManager(), "Time Picker");
+        startEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) showTimePicker(startEditText);
         });
-        start.setOnClickListener(v -> timePicker.show(getSupportFragmentManager(), "Time picker"));
+        startEditText.setOnClickListener(v -> showTimePicker(startEditText));
 
-        end.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) timePicker.show(getSupportFragmentManager(), "Time Picker");
+        endEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) showTimePicker(endEditText);
         });
-        end.setOnClickListener(v -> timePicker.show(getSupportFragmentManager(), "Time picker"));
-        // FIXME: End
+        endEditText.setOnClickListener(v -> showTimePicker(endEditText));
 
-        cancel.setOnClickListener(v -> finish());
+        cancelButton.setOnClickListener(v -> finish());
+
         slider.addOnChangeListener((slider, value, fromUser) -> {
             if (value % 5 == 0 && haptics) vibrator.vibrate(30);
-            rate.setText(String.valueOf(value));
+            rateEditText.setText(String.valueOf((int) value));
         });
 
         slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
@@ -138,23 +130,59 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        if (sprinkler.activeDays[0] == 1) SUNDAY.setChecked(true);
-        if (sprinkler.activeDays[1] == 1) MONDAY.setChecked(true);
-        if (sprinkler.activeDays[2] == 1) TUESDAY.setChecked(true);
-        if (sprinkler.activeDays[3] == 1) WEDNESDAY.setChecked(true);
-        if (sprinkler.activeDays[4] == 1) THURSDAY.setChecked(true);
-        if (sprinkler.activeDays[5] == 1) FRIDAY.setChecked(true);
-        if (sprinkler.activeDays[6] == 1) SATURDAY.setChecked(true);
+        SUNDAY.setChecked(sprinkler.activeDays[0] == 1);
+        MONDAY.setChecked(sprinkler.activeDays[1] == 1);
+        TUESDAY.setChecked(sprinkler.activeDays[2] == 1);
+        WEDNESDAY.setChecked(sprinkler.activeDays[3] == 1);
+        THURSDAY.setChecked(sprinkler.activeDays[4] == 1);
+        FRIDAY.setChecked(sprinkler.activeDays[5] == 1);
+        SATURDAY.setChecked(sprinkler.activeDays[6] == 1);
 
-        save.setOnClickListener(v -> {
+        saveButton.setOnClickListener(v -> {
             // TODO: (data validation required) Save current state and push to sever
+
+            String nameString = Objects.requireNonNull(nameEditText.getText()).toString(),
+                    locationString = Objects.requireNonNull(locationEditText.getText()).toString();
+            String[] colors = {
+                    card.cardBackgroundColor,
+                    card.cardBottomColor,
+                    card.textColor
+            };
+
+            int rateInt = (int) slider.getValue();
+            int[] activeDays = {SUNDAY.isChecked() ? 1 : 0,
+                    MONDAY.isChecked() ? 1 : 0,
+                    TUESDAY.isChecked() ? 1 : 0,
+                    WEDNESDAY.isChecked() ? 1 : 0,
+                    THURSDAY.isChecked() ? 1 : 0,
+                    FRIDAY.isChecked() ? 1 : 0,
+                    SATURDAY.isChecked() ? 1 : 0};
+
+            Sprinkler sprinklerFinal = new Sprinkler(1, rateInt, activeDays, autoSwitch.isChecked());
+            Card finalCard = new Card(database.getLastId(), nameString, locationString, colors, sprinklerFinal);
+            database.edit(card, finalCard);
+            setResult(2);
             finish();
         });
 
-        delete.setOnClickListener(v -> {
+        deleteButton.setOnClickListener(v -> {
             database.delete(card);
             setResult(2);
             finish();
+        });
+    }
+
+    public void showTimePicker(TextInputEditText editText) {
+        timePicker = new MaterialTimePicker.Builder()
+                .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
+                .setTitleText("Choose time")
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .build();
+        timePicker.show(getSupportFragmentManager(), "Time picker");
+        timePicker.addOnPositiveButtonClickListener(v -> {
+            String hours = String.valueOf(timePicker.getHour()),
+                    minutes = String.valueOf(timePicker.getMinute());
+            editText.setText(String.format("%s:%s", hours, minutes));
         });
     }
 }

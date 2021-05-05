@@ -24,9 +24,6 @@
             android:name=".AuthenticationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AddDevicesSetup"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait" />
         <activity

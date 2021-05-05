@@ -170,4 +170,9 @@ public class Database extends SQLiteOpenHelper {
         }
         return finalCards;
     }
+
+    public Card get(Card card) {
+        for (Card c : getData()) if (c == card) return c;
+        return null;
+    }
 }
