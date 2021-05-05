@@ -45,14 +45,14 @@ public class HomeFragment extends Fragment {
         greetText1 = view.findViewById(R.id.greetText1);
         greetText2 = view.findViewById(R.id.greetText2);
 
-        greetText1.setText("Hello, " + preferences.getString("name", null));
-        greetText2.setText("Weather Cloudy");
         database = new Database(getContext());
 
         cards = new ArrayList<>();
 
         nightModeFlag = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         cards = database.toggleDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
+
+        updateGreetCard();
 
         recyclerView = view.findViewById(R.id.recyclerView);
         adapter = new RecyclerViewAdapter(getActivity(), cards);
@@ -71,7 +71,18 @@ public class HomeFragment extends Fragment {
             nightModeFlag = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             cards = database.toggleDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
             adapter.updateReceiptsList(cards);
-            Toast.makeText(getContext(), "Done", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
+            updateGreetCard();
+        }
+    }
+
+    public void updateGreetCard() {
+        if (cards.size() == 0) {
+            greetText1.setText("It's empty here!");
+            greetText2.setText("Try adding some devices");
+        } else {
+            greetText1.setText("Hello, " + preferences.getString("name", null));
+            greetText2.setText("Rain expected in 30 mins");
         }
     }
 }

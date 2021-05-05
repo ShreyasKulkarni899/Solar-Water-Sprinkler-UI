@@ -138,6 +138,7 @@
                 android:id="@+id/editFlowRate"
                 android:layout_width="match_parent"
                 android:fontFamily="@font/rubik_light"
+                android:inputType="number"
                 android:layout_height="wrap_content"
                 android:hint="Rate" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -179,7 +180,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
-                    android:inputType="date"
+                    android:inputType="time"
                     android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,7 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
-                    android:inputType="date"
+                    android:inputType="time"
                     android:maxLength="10" />
             </com.google.android.material.textfield.TextInputLayout>
 
