@@ -31,7 +31,7 @@ public class ListModel {
         for(int i =0 ; i < images.length; i++){
             ListModel listModel = new ListModel();
             listModel.setImageId(images[i]);
-            listModel.setTitle("Picture"+1);
+            listModel.setTitle("Picture" + 1);
             dataList.add(listModel);
         }
 
@@ -39,7 +39,6 @@ public class ListModel {
     }
 
     private static  int[] getImages(){
-        int[] imageArray = {R.drawable.image_1};
-        return  imageArray;
+        return new int[]{R.drawable.image_1};
     }
 }

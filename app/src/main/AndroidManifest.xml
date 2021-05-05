@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Untitled">
-        <activity android:name=".ListViewActivity"></activity>
+        <activity android:name=".ListViewActivity" />
         <activity android:name=".AddDevice" />
         <activity
             android:name=".EditActivity"
@@ -38,7 +38,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
