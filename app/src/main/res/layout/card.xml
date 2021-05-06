@@ -28,10 +28,11 @@
             android:textStyle="bold" />
 
         <ImageButton
+            android:id="@+id/powerToggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="?android:selectableItemBackground"
+            style="?android:actionButtonStyle"
             android:clickable="true"
             android:padding="10dp"
             android:src="@drawable/ic_baseline_power_settings_new_24" />

@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
         updateGreetCard();
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter(getContext(), cards, this);
+        adapter = new RecyclerViewAdapter(getContext(), cards, database, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
             Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
             nightModeFlag = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             cards = database.toggleDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
-            adapter.notifyDataSetChanged();
+            adapter.updateCards(cards);
             updateGreetCard();
         }
     }

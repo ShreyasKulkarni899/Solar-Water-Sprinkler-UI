@@ -175,4 +175,24 @@ public class Database extends SQLiteOpenHelper {
         for (Card c : getData()) if (c == card) return c;
         return null;
     }
+
+    public ArrayList<Card> toggleStatus(int position) {
+        cards = getData();
+        Card initCard = cards.get(position);
+        cards.remove(position);
+        cards.add(position, new Card(
+                initCard.id,
+                initCard.name,
+                initCard.location,
+                new String[]{initCard.cardBackgroundColor, initCard.cardBottomColor, initCard.textColor},
+                new Sprinkler(
+                        initCard.sprinkler.status == 0 ? 1 : 0,
+                        initCard.sprinkler.rate,
+                        initCard.sprinkler.activeDays,
+                        initCard.sprinkler.auto
+                )
+        ));
+        edit(initCard, cards.get(position));
+        return this.cards;
+    }
 }

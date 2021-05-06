@@ -24,8 +24,8 @@
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?android:actionButtonStyle"
                 android:layout_centerVertical="true"
-                android:background="?android:selectableItemBackground"
                 android:src="@drawable/ic_baseline_arrow_back_ios_24" />
 
             <LinearLayout
@@ -60,22 +60,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/delete"
-                android:background="?android:selectableItemBackground"
                 android:padding="10dp"
+                style="?android:actionButtonStyle"
                 android:src="@drawable/ic_baseline_power_settings_new_24"
                 android:tooltipText="Power off" />
 
             <ImageButton
                 android:id="@+id/delete"
-                style="@style/Widget.AppCompat.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:background="?android:selectableItemBackground"
                 android:padding="10dp"
+                style="?android:actionButtonStyle"
                 android:src="@drawable/ic_round_delete_24"
                 android:tooltipText="Delete" />
-
         </RelativeLayout>
 
         <TextView
@@ -304,6 +302,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/auto"
                 android:layout_gravity="end"
+                android:checked="true"
                 android:layout_alignParentRight="true"
                 app:useMaterialThemeColors="true" />
 

@@ -1,11 +1,12 @@
+
 package com.nkocet.untitled;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,13 +23,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     ArrayList<Card> cards;
-    Activity activity;
     CardClickListener listener;
+    Database database;
 
-    public RecyclerViewAdapter(Context context, ArrayList<Card> cards, CardClickListener listener) {
+    public RecyclerViewAdapter(Context context, ArrayList<Card> cards, Database database, CardClickListener listener) {
         this.context = context;
         this.listener = listener;
         this.cards = cards;
+        this.database = database;
     }
 
     @NonNull
@@ -50,12 +52,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.status.setImageResource(cards.get(position).sprinkler.status == Sprinkler.ONLINE
                 ? R.drawable.ic_baseline_online_24
                 : R.drawable.ic_baseline_offline_24);
+        holder.powerToggle.setOnClickListener(v -> updateCards(database.toggleStatus(position)));
 
     }
 
     @Override
     public int getItemCount() {
         return cards.size();
+    }
+
+    public void updateCards(ArrayList<Card> cards) {
+        this.cards = cards;
+        this.notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -65,6 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         LinearLayout cardBottom;
         MaterialCardView card;
         ImageView status;
+        ImageButton powerToggle;
         CardClickListener listener;
 
         public MyViewHolder(@NonNull View itemView, CardClickListener listener) {
@@ -75,6 +84,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             cardBody = itemView.findViewById(R.id.cardBody);
             cardBottom = itemView.findViewById(R.id.cardBottom);
             status = itemView.findViewById(R.id.status);
+            powerToggle = itemView.findViewById(R.id.powerToggle);
             this.listener = listener;
             itemView.setOnClickListener(this);
         }
