@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardClickListener {
-
+    private static final String TAG = "HomeFragment";
     RecyclerView recyclerView;
     ArrayList<Card> cards;
     FloatingActionButton add;
@@ -50,12 +51,14 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
         cards = new ArrayList<>();
 
         nightModeFlag = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        cards = database.toggleDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
+        cards = database.getCardsByDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
 
         updateGreetCard();
 
+        Log.d(TAG, String.valueOf(cards.get(0).sprinkler.status));
+
         recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter(getContext(), cards, database, this);
+        adapter = new RecyclerViewAdapter(getContext(), cards, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
@@ -69,8 +72,8 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UPDATE_RECYCLER_VIEW) {
             Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
-            nightModeFlag = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            cards = database.toggleDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
+            nightModeFlag = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            cards = database.getCardsByDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
             adapter.updateCards(cards);
             updateGreetCard();
         }

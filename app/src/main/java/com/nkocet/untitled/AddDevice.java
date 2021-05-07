@@ -1,10 +1,10 @@
 package com.nkocet.untitled;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +17,10 @@ import com.google.android.material.slider.Slider;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class AddDevice extends AppCompatActivity {
+import java.util.Objects;
 
+public class AddDevice extends AppCompatActivity {
+    private static final String TAG = "AddDevice";
     TextInputEditText nameEditText, locationEditText, rateEditText, startEditText, endEditText;
     Slider slider;
     Chip SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
@@ -90,10 +92,9 @@ public class AddDevice extends AppCompatActivity {
 
         add.setOnClickListener(v -> {
             // TODO: (data validation required) Save current state and push to sever
-            database.getLastId();
-            String name = nameEditText.getText().toString(),
-                    location = locationEditText.getText().toString(),
-                    rate = rateEditText.getText().toString();
+            String name = Objects.requireNonNull(nameEditText.getText()).toString(),
+                    location = Objects.requireNonNull(locationEditText.getText()).toString(),
+                    rate = Objects.requireNonNull(rateEditText.getText()).toString();
 
             int[] activeDays = {SUNDAY.isChecked() ? 1 : 0,
                     MONDAY.isChecked() ? 1 : 0,
@@ -104,8 +105,10 @@ public class AddDevice extends AppCompatActivity {
                     SATURDAY.isChecked() ? 1 : 0};
 
             Sprinkler sprinkler = new Sprinkler(1, Integer.parseInt(rate), activeDays, auto.isChecked());
-            Card card = new Card(database.getLastId(), name, location, new String[]{"", "", ""}, sprinkler);
-            database.insertData(card);
+            int nextId = Integer.parseInt(database.getLastId()) + 1;
+            Log.d(TAG, String.valueOf(nextId));
+            Card card = new Card(String.valueOf(nextId), name, location, new String[]{}, sprinkler);
+            database.insertCard(card);
             setResult(2);
             finish();
         });

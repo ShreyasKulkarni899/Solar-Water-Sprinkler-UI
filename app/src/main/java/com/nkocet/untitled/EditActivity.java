@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ import com.google.android.material.timepicker.TimeFormat;
 import java.util.Objects;
 
 public class EditActivity extends AppCompatActivity {
+
+    private static final String TAG = "EditActivity";
 
     TextInputEditText nameEditText, locationEditText, rateEditText, startEditText, endEditText;
     Slider slider;
@@ -59,7 +62,7 @@ public class EditActivity extends AppCompatActivity {
         title = findViewById(R.id.sprinklerName);
         autoSwitch = findViewById(R.id.auto);
         deleteButton = findViewById(R.id.delete);
-        power_off_button = findViewById(R.id.power_off);
+        power_off_button = findViewById(R.id.edit_power_off);
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -72,25 +75,35 @@ public class EditActivity extends AppCompatActivity {
         SATURDAY = findViewById(R.id.day7);
 
         Card card = (Card) getIntent().getSerializableExtra("card");
-        Sprinkler sprinkler = card.sprinkler;
 
         nameEditText.setText(card.name);
         locationEditText.setText(card.location);
-        rateEditText.setText(String.valueOf(sprinkler.rate));
+        rateEditText.setText(String.valueOf(card.sprinkler.rate));
         rateEditText.setEnabled(false);
-        slider.setValue(sprinkler.rate);
+        slider.setValue(card.sprinkler.rate);
 
-        status.setImageResource(sprinkler.status == Sprinkler.ONLINE
+        power_off_button.setOnClickListener(v -> {
+            card.sprinkler.status = card.sprinkler.status == Sprinkler.ONLINE ? Sprinkler.OFFLINE : Sprinkler.ONLINE;
+            status.setImageResource(card.sprinkler.status == Sprinkler.ONLINE
+                    ? R.drawable.ic_baseline_online_24
+                    : R.drawable.ic_baseline_offline_24);
+
+            title.setText(card.sprinkler.status == Sprinkler.ONLINE
+                    ? "Online"
+                    : "Offline");
+        });
+
+        status.setImageResource(card.sprinkler.status == Sprinkler.ONLINE
                 ? R.drawable.ic_baseline_online_24
                 : R.drawable.ic_baseline_offline_24);
 
-        title.setText(sprinkler.status == Sprinkler.ONLINE
+        title.setText(card.sprinkler.status == Sprinkler.ONLINE
                 ? "Online"
                 : "Offline");
 
         back.setOnClickListener(v -> finish());
 
-        autoSwitch.setChecked(sprinkler.auto);
+        autoSwitch.setChecked(card.sprinkler.auto);
 
         // TODO: Auto mode implementation here
         autoSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> slider.setEnabled(!isChecked));
@@ -133,24 +146,20 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        SUNDAY.setChecked(sprinkler.activeDays[0] == 1);
-        MONDAY.setChecked(sprinkler.activeDays[1] == 1);
-        TUESDAY.setChecked(sprinkler.activeDays[2] == 1);
-        WEDNESDAY.setChecked(sprinkler.activeDays[3] == 1);
-        THURSDAY.setChecked(sprinkler.activeDays[4] == 1);
-        FRIDAY.setChecked(sprinkler.activeDays[5] == 1);
-        SATURDAY.setChecked(sprinkler.activeDays[6] == 1);
+        SUNDAY.setChecked(card.sprinkler.activeDays[0] == 1);
+        MONDAY.setChecked(card.sprinkler.activeDays[1] == 1);
+        TUESDAY.setChecked(card.sprinkler.activeDays[2] == 1);
+        WEDNESDAY.setChecked(card.sprinkler.activeDays[3] == 1);
+        THURSDAY.setChecked(card.sprinkler.activeDays[4] == 1);
+        FRIDAY.setChecked(card.sprinkler.activeDays[5] == 1);
+        SATURDAY.setChecked(card.sprinkler.activeDays[6] == 1);
 
         saveButton.setOnClickListener(v -> {
             // TODO: (data validation required) Save current state and push to sever
 
             String nameString = Objects.requireNonNull(nameEditText.getText()).toString(),
                     locationString = Objects.requireNonNull(locationEditText.getText()).toString();
-            String[] colors = {
-                    card.cardBackgroundColor,
-                    card.cardBottomColor,
-                    card.textColor
-            };
+            String[] colors = card.colors;
 
             int rateInt = (int) slider.getValue();
             int[] activeDays = {
@@ -163,9 +172,11 @@ public class EditActivity extends AppCompatActivity {
                     SATURDAY.isChecked() ? 1 : 0
             };
 
-            Sprinkler sprinklerFinal = new Sprinkler(1, rateInt, activeDays, autoSwitch.isChecked());
-            Card finalCard = new Card(database.getLastId(), nameString, locationString, colors, sprinklerFinal);
-            database.edit(card, finalCard);
+//            Log.d(TAG, String.valueOf(card.sprinkler.status));
+
+            Sprinkler sprinklerFinal = new Sprinkler(card.sprinkler.status, rateInt, activeDays, autoSwitch.isChecked());
+            Card finalCard = new Card(card.id, nameString, locationString, colors, sprinklerFinal);
+            database.editCard(card, finalCard);
             setResult(HomeFragment.UPDATE_RECYCLER_VIEW);
             finish();
         });

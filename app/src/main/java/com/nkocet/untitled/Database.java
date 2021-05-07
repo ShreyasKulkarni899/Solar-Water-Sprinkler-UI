@@ -8,28 +8,25 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Database extends SQLiteOpenHelper {
 
-    public static final String TABLE_NAME = "Devices",
-            COL_0 = "ID",
-            COL_1 = "Name",
-            COL_2 = "Location",
-            COL_3 = "Rate",
-            COL_4 = "Working_days",
-            COL_5 = "Auto",
-            COL_6 = "Body_Color",
-            COL_7 = "Bottom_Color",
-            COL_8 = "Text_Color";
+    public static final String
+            TABLE_NAME = "Devices",
+            COL_0 = "DEV_ID",
+            COL_1 = "Object";
+
+    private static final String TAG = "Database";
 
     static ArrayList<String[]> lightPalette = new ArrayList<>();
 
     static ArrayList<String[]> darkPalette = new ArrayList<>();
-
-    static int i = 0;
-
-    ArrayList<Card> cards;
 
     SharedPreferences preferences;
 
@@ -49,8 +46,8 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String cmd = String.format("CREATE TABLE %s (ID INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)",
-                TABLE_NAME, COL_1, COL_2, COL_3, COL_4, COL_5, COL_6, COL_7, COL_8);
+        String cmd = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s BLOB)",
+                TABLE_NAME, COL_0, COL_1);
         db.execSQL(cmd);
     }
 
@@ -61,29 +58,18 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertData(Card card) {
+    public void insertCard(Card card) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.d("TAG", "insertData: ");
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1, card.name);
-        contentValues.put(COL_2, card.location);
-        contentValues.put(COL_3, card.sprinkler.rate);
-
-        StringBuilder activeDays = new StringBuilder();
-        for (int i = 0; i < card.sprinkler.activeDays.length; i++)
-            activeDays.append(card.sprinkler.activeDays[i] == 1 ? "1" : "0");
-        contentValues.put(COL_4, activeDays.toString());
-        contentValues.put(COL_5, String.valueOf(card.sprinkler.auto));
-
-        boolean darkMode = preferences.getBoolean("darkMode", false);
-        if (darkMode) {
-            contentValues.put(COL_6, darkPalette.get(i)[0]);
-            contentValues.put(COL_7, darkPalette.get(i)[1]);
-            contentValues.put(COL_8, darkPalette.get(i)[2]);
-        } else {
-            contentValues.put(COL_6, lightPalette.get(i)[0]);
-            contentValues.put(COL_7, lightPalette.get(i)[1]);
-            contentValues.put(COL_8, lightPalette.get(i++ % 6)[2]);
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(card);
+            objectOutputStream.flush();
+            byte[] objArray = byteArrayOutputStream.toByteArray();
+            contentValues.put(COL_1, objArray);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         db.insert(TABLE_NAME, null, contentValues);
     }
@@ -94,24 +80,15 @@ public class Database extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         ArrayList<Card> cards = new ArrayList<>();
         while (cursor.moveToNext()) {
-            String id = cursor.getString(0);
-            String name = cursor.getString(1);
-            String location = cursor.getString(2);
-            String rate = cursor.getString(3);
-
-            char[] workingDays = cursor.getString(4).toCharArray();
-            int[] active_days = new int[7];
-            for (int i = 0; i < workingDays.length; i++)
-                active_days[i] = workingDays[i] == '1' ? 1 : 0;
-
-            boolean auto = cursor.getString(5).equals("true");
-            String cardBackground = cursor.getString(6),
-                    cardBottom = cursor.getString(7),
-                    text = cursor.getString(8);
-
-            Sprinkler sprinkler = new Sprinkler(1, Integer.parseInt(rate), active_days, auto);
-            Card card = new Card(id, name, location, new String[]{cardBackground, cardBottom, text}, sprinkler);
-            cards.add(card);
+            try {
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(cursor.getBlob(1));
+                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+                cards.add((Card) objectInputStream.readObject());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         cursor.close();
         return cards;
@@ -121,78 +98,64 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = String.format("SELECT * FROM %s", TABLE_NAME);
         Cursor cursor = db.rawQuery(query, null);
-        return String.valueOf(cursor.getCount());
+        if (cursor.getCount() == 0) return "0";
+        cursor.moveToLast();
+        return cursor.getString(0);
     }
 
-    public void edit(Card initCard, Card finalCard) {
+    public void editCard(Card initCard, Card finalCard) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1, finalCard.name);
-        contentValues.put(COL_2, finalCard.location);
-        contentValues.put(COL_3, finalCard.sprinkler.rate);
-
-        StringBuilder activeDays = new StringBuilder();
-        for (int i = 0; i < finalCard.sprinkler.activeDays.length; i++)
-            activeDays.append(finalCard.sprinkler.activeDays[i] == 1 ? "1" : "0");
-        contentValues.put(COL_4, activeDays.toString());
-        contentValues.put(COL_5, String.valueOf(finalCard.sprinkler.auto));
-        contentValues.put(COL_6, finalCard.cardBackgroundColor);
-        contentValues.put(COL_7, finalCard.cardBottomColor);
-        contentValues.put(COL_8, finalCard.textColor);
-
-        String[] whereArgs = {initCard.id};
-        db.update(TABLE_NAME, contentValues, COL_0 + "=?", whereArgs);
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(finalCard);
+            objectOutputStream.flush();
+            byte[] objArray = byteArrayOutputStream.toByteArray();
+            contentValues.put(COL_1, objArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        db.update(TABLE_NAME, contentValues, COL_0 + "=?", new String[]{initCard.id});
     }
 
     public void delete(Card card) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String id = card.id;
-        String[] whereArgs = {id};
-        db.delete(TABLE_NAME, COL_0 + "=?", whereArgs);
+        Log.d(TAG, String.format("delete: %s", card.id));
+        db.delete(TABLE_NAME, COL_0 + "=?", new String[]{card.id});
     }
 
-    public ArrayList<Card> toggleDarkMode(boolean darkMode) {
+    public ArrayList<Card> getCardsByDarkMode(boolean darkMode) {
         ArrayList<Card> initCards = getData(),
                 finalCards = new ArrayList<>();
         if (darkMode) {
             for (int j = 0; j < initCards.size(); j++) {
                 Card initCard = initCards.get(j);
                 finalCards.add(new Card(initCard.id, initCard.name, initCard.location, darkPalette.get(0), initCard.sprinkler));
-                edit(initCard, finalCards.get(j));
+                editCard(initCard, finalCards.get(j));
             }
         } else {
             int k = 0;
             for (int j = 0; j < initCards.size(); j++) {
                 Card initCard = initCards.get(j);
                 finalCards.add(new Card(initCard.id, initCard.name, initCard.location, lightPalette.get(k++ % 6), initCard.sprinkler));
-                edit(initCard, finalCards.get(j));
+                editCard(initCard, finalCards.get(j));
             }
         }
         return finalCards;
     }
 
-    public Card get(Card card) {
-        for (Card c : getData()) if (c == card) return c;
-        return null;
-    }
-
-    public ArrayList<Card> toggleStatus(int position) {
-        cards = getData();
-        Card initCard = cards.get(position);
-        cards.remove(position);
-        cards.add(position, new Card(
-                initCard.id,
-                initCard.name,
-                initCard.location,
-                new String[]{initCard.cardBackgroundColor, initCard.cardBottomColor, initCard.textColor},
-                new Sprinkler(
-                        initCard.sprinkler.status == 0 ? 1 : 0,
-                        initCard.sprinkler.rate,
-                        initCard.sprinkler.activeDays,
-                        initCard.sprinkler.auto
-                )
-        ));
-        edit(initCard, cards.get(position));
-        return this.cards;
+    public ArrayList<Card> toggleStatus(Card card) {
+        ArrayList<Card> cards = getCardsByDarkMode(preferences.getBoolean("darkMode", false));
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).id.equals(card.id)) {
+                card.sprinkler.status = card.sprinkler.status == 0 ? 1 : 0;
+                editCard(cards.get(i), card);
+                cards.remove(i);
+                cards.add(i, card);
+                break;
+            }
+        }
+        return cards;
     }
 }
