@@ -17,11 +17,13 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
+                android:fontFamily="@font/rubik_light"
                 android:text="@string/nav_header_title"
                 android:textColor="?attr/colorOnPrimary"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -42,6 +45,7 @@
             <TextView
                 android:id="@+id/textView"
                 android:textColor="?attr/colorOnPrimary"
+                android:fontFamily="@font/rubik_light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nav_header_subtitle" />

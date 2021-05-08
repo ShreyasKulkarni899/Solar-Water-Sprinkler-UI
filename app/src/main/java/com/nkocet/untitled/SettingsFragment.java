@@ -15,7 +15,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     SharedPreferences preferences;
     SwitchPreference darkMode, bioAuth, haptics;
-    Preference logout, appInfo;
+    Preference logout, appInfo, forgot;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +80,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 haptics.setSummary("Disabled");
                 preferences.edit().putBoolean("haptics", false).apply();
             }
+            return false;
+        });
+
+        forgot = findPreference("forgot");
+        forgot.setOnPreferenceClickListener(preference -> {
+            startActivity(new Intent(requireContext(), ForgotPasswordActivity.class));
             return false;
         });
     }

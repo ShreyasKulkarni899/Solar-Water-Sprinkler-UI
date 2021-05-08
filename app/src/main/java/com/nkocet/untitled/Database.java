@@ -3,6 +3,7 @@ package com.nkocet.untitled;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -27,13 +28,13 @@ public class Database extends SQLiteOpenHelper {
     static ArrayList<String[]> lightPalette = new ArrayList<>();
 
     static ArrayList<String[]> darkPalette = new ArrayList<>();
-
+    Context context;
     SharedPreferences preferences;
 
     public Database(Context context) {
         super(context, "database.db", null, 1);
         this.preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
-
+        this.context = context;
         lightPalette.add(new String[]{"#FCF0F0", "#F8A9A9", "#FFFFFF"});
         lightPalette.add(new String[]{"#EFFFF9", "#95FFD6", "#0A0057"});
         lightPalette.add(new String[]{"#FFF0F7", "#FF98C8", "#FFFFFF"});
@@ -46,7 +47,7 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String cmd = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s BLOB)",
+        String cmd = String.format("CREATE TABLE %s (%s TEXT, %s BLOB)",
                 TABLE_NAME, COL_0, COL_1);
         db.execSQL(cmd);
     }
@@ -67,6 +68,8 @@ public class Database extends SQLiteOpenHelper {
             objectOutputStream.writeObject(card);
             objectOutputStream.flush();
             byte[] objArray = byteArrayOutputStream.toByteArray();
+            int nextId = Integer.parseInt(getLastId()) + 1;
+            contentValues.put(COL_0, nextId);
             contentValues.put(COL_1, objArray);
         } catch (IOException e) {
             e.printStackTrace();
@@ -146,10 +149,10 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public ArrayList<Card> toggleStatus(Card card) {
-        ArrayList<Card> cards = getCardsByDarkMode(preferences.getBoolean("darkMode", false));
+        ArrayList<Card> cards = getCardsByDarkMode((context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES);
         for (int i = 0; i < cards.size(); i++) {
             if (cards.get(i).id.equals(card.id)) {
-                card.sprinkler.status = card.sprinkler.status == 0 ? 1 : 0;
+                card.sprinkler.status = card.sprinkler.status == Sprinkler.ONLINE ? Sprinkler.OFFLINE : Sprinkler.ONLINE;
                 editCard(cards.get(i), card);
                 cards.remove(i);
                 cards.add(i, card);

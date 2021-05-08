@@ -58,7 +58,6 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#DFDFDF"
         app:layout_constraintTop_toBottomOf="@+id/imageView1">
 
         <LinearLayout

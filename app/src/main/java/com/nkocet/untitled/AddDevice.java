@@ -64,6 +64,7 @@ public class AddDevice extends AppCompatActivity {
         haptics = preferences.getBoolean("haptics", true);
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        rateEditText.setEnabled(false);
 
         back.setOnClickListener(v -> finish());
         cancel.setOnClickListener(v -> finish());

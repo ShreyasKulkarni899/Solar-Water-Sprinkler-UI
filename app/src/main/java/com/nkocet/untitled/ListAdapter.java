@@ -12,15 +12,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
 
-    List<ListModel> objectList;
+    ArrayList<ListModel> objectList;
     LayoutInflater inflater;
     Context context;
 
-    public ListAdapter(Context context, List<ListModel> objectList) {
+    public ListAdapter(Context context, ArrayList<ListModel> objectList) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.objectList = objectList;
@@ -43,7 +46,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ListModel current = objectList.get(position);
         holder.setData(current, position);
-        holder.layout.setOnClickListener(v -> context.startActivity(new Intent(context, CropDetailsPane.class)
+        holder.cardView.setOnClickListener(v -> context.startActivity(new Intent(context, CropDetailsPane.class)
                 .putExtra("object", holder.currentObject)));
     }
 
@@ -53,11 +56,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
         ImageView imgThumb;
         int position;
         ListModel currentObject;
-        LinearLayout layout;
+        MaterialCardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            layout = itemView.findViewById(R.id.list_item_parent);
+            cardView = itemView.findViewById(R.id.list_item_parent);
             title = itemView.findViewById(R.id.tvTitle);
             imgThumb = itemView.findViewById(R.id.img_tmb);
         }

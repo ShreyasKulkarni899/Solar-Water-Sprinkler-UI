@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -172,9 +171,8 @@ public class EditActivity extends AppCompatActivity {
                     SATURDAY.isChecked() ? 1 : 0
             };
 
-//            Log.d(TAG, String.valueOf(card.sprinkler.status));
-
-            Sprinkler sprinklerFinal = new Sprinkler(card.sprinkler.status, rateInt, activeDays, autoSwitch.isChecked());
+            Sprinkler sprinklerFinal;
+            sprinklerFinal = new Sprinkler(card.sprinkler.status, rateInt, activeDays, autoSwitch.isChecked());
             Card finalCard = new Card(card.id, nameString, locationString, colors, sprinklerFinal);
             database.editCard(card, finalCard);
             setResult(HomeFragment.UPDATE_RECYCLER_VIEW);

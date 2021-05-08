@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,7 +22,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardClickListener {
-    private static final String TAG = "HomeFragment";
     RecyclerView recyclerView;
     ArrayList<Card> cards;
     FloatingActionButton add;
@@ -36,11 +33,10 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
     int nightModeFlag;
     static int UPDATE_RECYCLER_VIEW = 1;
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        preferences = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        preferences = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
         greetingCard = view.findViewById(R.id.greetingCard);
         greetText1 = view.findViewById(R.id.greetText1);
@@ -50,12 +46,10 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
 
         cards = new ArrayList<>();
 
-        nightModeFlag = getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        nightModeFlag = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         cards = database.getCardsByDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
 
         updateGreetCard();
-
-        Log.d(TAG, String.valueOf(cards.get(0).sprinkler.status));
 
         recyclerView = view.findViewById(R.id.recyclerView);
         adapter = new RecyclerViewAdapter(getContext(), cards, this);
@@ -71,7 +65,6 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == UPDATE_RECYCLER_VIEW) {
-            Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
             nightModeFlag = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             cards = database.getCardsByDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
             adapter.updateCards(cards);
@@ -79,13 +72,14 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateGreetCard() {
         if (cards.size() == 0) {
             greetText1.setText("It's empty here!");
             greetText2.setText("Try adding some devices");
         } else {
             greetText1.setText("Hello, " + preferences.getString("name", null));
-            greetText2.setText("Rain expected in 30 mins");
+            greetText2.setText("Rain expected in 30 min.");
         }
     }
 
