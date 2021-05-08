@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginTop="5dp"
-    android:elevation="5dp"
-    app:cardCornerRadius="5dp">
+    android:id="@+id/list_item_parent"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_margin="16dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:id="@+id/list_item_parent"
         android:orientation="horizontal">
-        
-        <ImageView
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_tmb"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="7dp"
             android:src="@mipmap/ic_launcher"
-            />
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"/>
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="7dp"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="Title"
-            android:textColor="@color/black"
             android:textSize="18sp"
+            android:fontFamily="@font/rubik_light"
             android:textStyle="bold" />
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

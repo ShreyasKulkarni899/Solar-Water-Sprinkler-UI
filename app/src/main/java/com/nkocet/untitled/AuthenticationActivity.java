@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Vibrator;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -24,6 +26,7 @@ public class AuthenticationActivity extends AppCompatActivity {
     MaterialButton button;
     SharedPreferences preferences;
     Vibrator vibrator;
+    TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         button = findViewById(R.id.login);
         pin = findViewById(R.id.password);
+        forgotPassword = findViewById(R.id.forgotPassword);
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -88,5 +92,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 }
             }
         });
+
+        forgotPassword.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class)));
     }
 }

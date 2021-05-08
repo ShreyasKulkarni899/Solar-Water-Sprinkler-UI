@@ -42,9 +42,11 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:id="@+id/forgotPassword"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="20dp"
+        android:textColor="?attr/colorSecondary"
         android:text="Forgot password?" />
 
     <com.google.android.material.button.MaterialButton

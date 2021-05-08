@@ -3,6 +3,7 @@ package com.nkocet.untitled;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,16 +22,18 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
+    private static final String TAG = "RecyclerViewAdapter";
+
     Context context;
     ArrayList<Card> cards;
     CardClickListener listener;
     Database database;
 
-    public RecyclerViewAdapter(Context context, ArrayList<Card> cards, Database database, CardClickListener listener) {
+    public RecyclerViewAdapter(Context context, ArrayList<Card> cards, CardClickListener listener) {
         this.context = context;
         this.listener = listener;
         this.cards = cards;
-        this.database = database;
+        database = new Database(context);
     }
 
     @NonNull
@@ -45,15 +48,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.name.setText(cards.get(position).name);
-        holder.name.setTextColor(Color.parseColor(cards.get(position).textColor));
+        holder.name.setTextColor(Color.parseColor(cards.get(position).colors[2]));
         holder.location.setText(cards.get(position).location);
-        holder.cardBody.setBackgroundColor(Color.parseColor(cards.get(position).cardBackgroundColor));
-        holder.cardBottom.setBackgroundColor(Color.parseColor(cards.get(position).cardBottomColor));
+        holder.cardBody.setBackgroundColor(Color.parseColor(cards.get(position).colors[0]));
+        holder.cardBottom.setBackgroundColor(Color.parseColor(cards.get(position).colors[1]));
         holder.status.setImageResource(cards.get(position).sprinkler.status == Sprinkler.ONLINE
                 ? R.drawable.ic_baseline_online_24
                 : R.drawable.ic_baseline_offline_24);
-        holder.powerToggle.setOnClickListener(v -> updateCards(database.toggleStatus(position)));
-
+        holder.powerToggle.setOnClickListener(v -> updateCards(database.toggleStatus(cards.get(position))));
     }
 
     @Override

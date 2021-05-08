@@ -3,26 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <item android:title="APP">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_home_fragment"
+                    android:icon="@drawable/ic_round_home_24"
+                    android:title="@string/menu_home" />
+                <item
+                    android:id="@+id/nav_time_control_fragment"
+                    android:icon="@drawable/ic_round_access_time_24"
+                    android:title="@string/time_control" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="Help">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_crop_guide_fragment"
+                    android:icon="@drawable/ic_round_menu_book_24"
+                    android:title="@string/guide" />
+                <item
+                    android:id="@+id/nav_help_fragment"
+                    android:icon="@drawable/ic_round_help_24"
+                    android:title="@string/help" />
+            </group>
+        </menu>
+    </item>
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home_fragment"
-            android:icon="@drawable/ic_round_home_24"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_time_control_fragment"
-            android:icon="@drawable/ic_round_access_time_24"
-            android:title="@string/time_control" />
-        <item
-            android:id="@+id/nav_crop_guide_fragment"
-            android:icon="@drawable/ic_round_menu_book_24"
-            android:title="@string/guide" />
-        <item
-            android:id="@+id/nav_help_fragment"
-            android:icon="@drawable/ic_round_help_24"
-            android:title="@string/help" />
         <item
             android:id="@+id/nav_settings_fragment"
             android:icon="@drawable/ic_round_settings_24"
             android:title="@string/settings" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_baseline_logout_24"
+            android:title="@string/logout" />
     </group>
 </menu>

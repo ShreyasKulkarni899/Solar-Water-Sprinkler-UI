@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,12 +12,6 @@
         android:summary="Off"
         android:title="Dark mode" />
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:icon="@drawable/ic_baseline_lock_24"
-        android:key="bioAuth"
-        android:summary="Disabled"
-        android:title="Fingerprint lock" />
 
     <SwitchPreference
         android:defaultValue="true"
@@ -27,7 +20,22 @@
         android:summary="Enabled"
         android:title="Haptic feedback" />
 
-    <PreferenceCategory android:title="Application" />
+    <PreferenceCategory android:title="Security" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:icon="@drawable/ic_baseline_lock_24"
+        android:key="bioAuth"
+        android:summary="Disabled"
+        android:title="Fingerprint lock" />r
+
+    <Preference
+        android:icon="@drawable/ic_baseline_security_24"
+        android:key="forgot"
+        android:summary="Set a new password"
+        android:title="Change password" />
+
+    <PreferenceCategory android:title="Help and Support" />
 
     <Preference
         android:icon="@drawable/ic_baseline_person_24"
@@ -40,6 +48,8 @@
         android:key="help"
         android:summary="@string/app_version"
         android:title="App version" />
+
+    <PreferenceCategory />
 
     <Preference
         android:icon="@drawable/ic_baseline_logout_24"
