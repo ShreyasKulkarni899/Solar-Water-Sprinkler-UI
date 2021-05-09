@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -29,6 +30,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
     LinearLayout greetingCard;
     TextView greetText1, greetText2;
     RecyclerViewAdapter adapter;
+    SwipeRefreshLayout refreshLayout;
     Database database;
     int nightModeFlag;
     static int UPDATE_RECYCLER_VIEW = 1;
@@ -41,6 +43,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
         greetingCard = view.findViewById(R.id.greetingCard);
         greetText1 = view.findViewById(R.id.greetText1);
         greetText2 = view.findViewById(R.id.greetText2);
+        refreshLayout = view.findViewById(R.id.refresh);
 
         database = new Database(getContext());
 
@@ -56,6 +59,11 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
+        refreshLayout.setOnRefreshListener(() -> {
+            update();
+            refreshLayout.setRefreshing(false);
+        });
+
         add = view.findViewById(R.id.addDeviceFAB);
         add.setOnClickListener(v -> startActivityForResult(new Intent(getActivity(), AddDevice.class), UPDATE_RECYCLER_VIEW));
         return view;
@@ -64,12 +72,14 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.CardCl
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == UPDATE_RECYCLER_VIEW) {
-            nightModeFlag = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            cards = database.getCardsByDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
-            adapter.updateCards(cards);
-            updateGreetCard();
-        }
+        if (requestCode == UPDATE_RECYCLER_VIEW) update();
+    }
+
+    void update() {
+        nightModeFlag = requireContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        cards = database.getCardsByDarkMode(nightModeFlag == Configuration.UI_MODE_NIGHT_YES);
+        adapter.updateCards(cards);
+        updateGreetCard();
     }
 
     @SuppressLint("SetTextI18n")

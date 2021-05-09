@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CropGuideFragment extends Fragment {
+    RecyclerView recyclerView;
+    ListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_crop_guide, container, false);
 
         ArrayList<ListModel> crops = new ArrayList<>();
@@ -28,10 +29,10 @@ public class CropGuideFragment extends Fragment {
         // Similarly add more objects to list
         // Or fetch from database
 
-        RecyclerView recyclerView = view.findViewById(R.id.lst_recyclerView);
-        ListAdapter adapter = new ListAdapter(getContext(), crops);
+        // Setting up the recyclerView adapter
+        recyclerView = view.findViewById(R.id.lst_recyclerView);
+        adapter = new ListAdapter(getContext(), crops);
         recyclerView.setAdapter(adapter);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

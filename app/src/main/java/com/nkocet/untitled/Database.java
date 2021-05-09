@@ -2,12 +2,11 @@ package com.nkocet.untitled;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.view.View;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,31 +17,28 @@ import java.util.ArrayList;
 
 public class Database extends SQLiteOpenHelper {
 
-    public static final String
+    // Variable Initialisations
+    private static final String
             TABLE_NAME = "Devices",
             COL_0 = "DEV_ID",
-            COL_1 = "Object";
+            COL_1 = "Object",
+            TAG = "Database";
 
-    private static final String TAG = "Database";
+    private static final ArrayList<String[]> lightPalette = new ArrayList<>(),
+            darkPalette = new ArrayList<>();
 
-    static ArrayList<String[]> lightPalette = new ArrayList<>();
-
-    static ArrayList<String[]> darkPalette = new ArrayList<>();
-    Context context;
-    SharedPreferences preferences;
-
-    public Database(Context context) {
-        super(context, "database.db", null, 1);
-        this.preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
-        this.context = context;
+    static {
         lightPalette.add(new String[]{"#FCF0F0", "#F8A9A9", "#FFFFFF"});
         lightPalette.add(new String[]{"#EFFFF9", "#95FFD6", "#0A0057"});
         lightPalette.add(new String[]{"#FFF0F7", "#FF98C8", "#FFFFFF"});
         lightPalette.add(new String[]{"#EAF4FF", "#8BC1FF", "#FFFFFF"});
         lightPalette.add(new String[]{"#CBE9FF", "#2A6B9B", "#FFFFFF"});
         lightPalette.add(new String[]{"#EAFFF8", "#3D715F", "#FFFFFF"});
-
         darkPalette.add(new String[]{"#404040", "#3B3B3B", "#FFFFFF"});
+    }
+
+    public Database(Context context) {
+        super(context, "database.db", null, 1);
     }
 
     @Override
@@ -148,17 +144,28 @@ public class Database extends SQLiteOpenHelper {
         return finalCards;
     }
 
-    public ArrayList<Card> toggleStatus(Card card) {
-        ArrayList<Card> cards = getCardsByDarkMode((context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES);
-        for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i).id.equals(card.id)) {
-                card.sprinkler.status = card.sprinkler.status == Sprinkler.ONLINE ? Sprinkler.OFFLINE : Sprinkler.ONLINE;
-                editCard(cards.get(i), card);
-                cards.remove(i);
-                cards.add(i, card);
-                break;
-            }
-        }
-        return cards;
+    public Card toggleStatus(Card card) {
+        Card newCard = new Card(card.id,
+                card.name,
+                card.location,
+                card.colors,
+                new Sprinkler(
+                        card.sprinkler.status == Sprinkler.ONLINE ? Sprinkler.OFFLINE : Sprinkler.ONLINE,
+                        card.sprinkler.rate,
+                        card.sprinkler.activeDays,
+                        card.sprinkler.activeTime,
+                        card.sprinkler.auto
+                ));
+        editCard(card, newCard);
+        return newCard;
+    }
+
+    public ArrayList<Card> getTimeControlCards(boolean darkMode) {
+        ArrayList<Card> cards = getCardsByDarkMode(darkMode),
+                finalCards = new ArrayList<>();
+        for (Card card : cards)
+            if (card.sprinkler.activeTime[0] != null && card.sprinkler.activeTime[1] != null)
+                finalCards.add(card);
+        return finalCards;
     }
 }

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Vibrator;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,8 +21,9 @@ import java.util.concurrent.Executor;
 
 public class AuthenticationActivity extends AppCompatActivity {
 
+    // Variable declarations
     TextInputEditText pin;
-    MaterialButton button;
+    MaterialButton login;
     SharedPreferences preferences;
     Vibrator vibrator;
     TextView forgotPassword;
@@ -33,10 +33,8 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        /* This activity is responsible for locking the application with biometrics
-         * This part of code is executed only if user has turned on app-lock from settings */
-
-        button = findViewById(R.id.login);
+        // Variable initialisations
+        login = findViewById(R.id.login);
         pin = findViewById(R.id.password);
         forgotPassword = findViewById(R.id.forgotPassword);
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -63,6 +61,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                     super.onAuthenticationHelp(helpCode, helpString);
                 }
 
+                // On successful biometric verification
                 @Override
                 public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                     super.onAuthenticationSucceeded(result);
@@ -77,7 +76,7 @@ public class AuthenticationActivity extends AppCompatActivity {
             });
         }
 
-        button.setOnClickListener(v -> {
+        login.setOnClickListener(v -> {
             String password = Objects.requireNonNull(pin.getText()).toString();
             if (TextUtils.isEmpty(password)) pin.setError("This field cannot be left empty!");
             else if (password.length() != 4) pin.setError("PIN must be of length 4");
@@ -93,6 +92,7 @@ public class AuthenticationActivity extends AppCompatActivity {
             }
         });
 
+        // Forgot password
         forgotPassword.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class)));
     }
 }
