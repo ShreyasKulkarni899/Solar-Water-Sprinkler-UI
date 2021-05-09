@@ -17,7 +17,7 @@
             </group>
         </menu>
     </item>
-    <item android:title="Help">
+    <item android:title="HELP">
         <menu>
             <group android:checkableBehavior="single">
                 <item
@@ -38,6 +38,7 @@
             android:title="@string/settings" />
         <item
             android:id="@+id/logout"
+            android:onClick="logout"
             android:icon="@drawable/ic_baseline_logout_24"
             android:title="@string/logout" />
     </group>

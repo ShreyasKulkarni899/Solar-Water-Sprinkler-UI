@@ -34,7 +34,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
-                getActivity().finish();
                 return false;
             });
         }

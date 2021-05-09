@@ -15,12 +15,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Variable initialisations
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
-
-        // Uncomment this line to clear all user settings
-        // Testing purpose only
-//        preferences.edit().clear().apply();
-
         boolean isFirstTime = preferences.getBoolean("isFirstTime", true),
                 darkMode = preferences.getBoolean("darkMode", false),
                 bioAuth = preferences.getBoolean("bioAuth", false);
@@ -28,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
         if (darkMode) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        if (isFirstTime) startActivity(new Intent(MainActivity.this, SplashActivity.class));
-        else {
-            if (bioAuth) startActivity(new Intent(MainActivity.this, AuthenticationActivity.class));
-            else startActivity(new Intent(MainActivity.this, Dashboard.class));
-        }
+        if (isFirstTime)
+            startActivity(new Intent(MainActivity.this, SplashActivity.class));
+        else if (bioAuth)
+            startActivity(new Intent(MainActivity.this, AuthenticationActivity.class));
+        else
+            startActivity(new Intent(MainActivity.this, Dashboard.class));
         finish();
     }
 }

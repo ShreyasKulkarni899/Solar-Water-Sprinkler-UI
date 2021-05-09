@@ -15,9 +15,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -28,6 +28,7 @@ public class EditActivity extends AppCompatActivity {
 
     private static final String TAG = "EditActivity";
 
+    MaterialButtonToggleGroup buttonToggleGroup;
     TextInputEditText nameEditText, locationEditText, rateEditText, startEditText, endEditText;
     Slider slider;
     Chip SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
@@ -37,7 +38,7 @@ public class EditActivity extends AppCompatActivity {
     ImageView status, back;
     ImageButton deleteButton, power_off_button;
     TextView title;
-    SwitchMaterial autoSwitch;
+    MaterialButton auto, manual;
     MaterialButton saveButton, cancelButton;
     Database database;
 
@@ -59,9 +60,11 @@ public class EditActivity extends AppCompatActivity {
         status = findViewById(R.id.status);
         back = findViewById(R.id.back);
         title = findViewById(R.id.sprinklerName);
-        autoSwitch = findViewById(R.id.auto);
+        auto = findViewById(R.id.auto);
+        manual = findViewById(R.id.manual);
         deleteButton = findViewById(R.id.delete);
         power_off_button = findViewById(R.id.edit_power_off);
+        buttonToggleGroup = findViewById(R.id.buttonGroup);
 
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
@@ -102,10 +105,10 @@ public class EditActivity extends AppCompatActivity {
 
         back.setOnClickListener(v -> finish());
 
-        autoSwitch.setChecked(card.sprinkler.auto);
+        if (card.sprinkler.auto) auto.setChecked(true);
+        else manual.setChecked(true);
 
-        // TODO: Auto mode implementation here
-        autoSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> slider.setEnabled(!isChecked));
+        buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> slider.setEnabled(checkedId == manual.getId()));
 
         deleteButton.setOnClickListener(v -> {
             database.delete(card);
@@ -153,6 +156,9 @@ public class EditActivity extends AppCompatActivity {
         FRIDAY.setChecked(card.sprinkler.activeDays[5] == 1);
         SATURDAY.setChecked(card.sprinkler.activeDays[6] == 1);
 
+        startEditText.setText(card.sprinkler.activeTime[0]);
+        endEditText.setText(card.sprinkler.activeTime[1]);
+
         saveButton.setOnClickListener(v -> {
             // TODO: (data validation required) Save current state and push to sever
 
@@ -171,8 +177,11 @@ public class EditActivity extends AppCompatActivity {
                     SATURDAY.isChecked() ? 1 : 0
             };
 
+            String start = Objects.requireNonNull(startEditText.getText()).toString();
+            String end = Objects.requireNonNull(endEditText.getText()).toString();
+
             Sprinkler sprinklerFinal;
-            sprinklerFinal = new Sprinkler(card.sprinkler.status, rateInt, activeDays, autoSwitch.isChecked());
+            sprinklerFinal = new Sprinkler(card.sprinkler.status, rateInt, activeDays, new String[]{start, end}, auto.isChecked());
             Card finalCard = new Card(card.id, nameString, locationString, colors, sprinklerFinal);
             database.editCard(card, finalCard);
             setResult(HomeFragment.UPDATE_RECYCLER_VIEW);

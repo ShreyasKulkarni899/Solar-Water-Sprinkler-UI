@@ -3,7 +3,6 @@ package com.nkocet.untitled;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.status.setImageResource(cards.get(position).sprinkler.status == Sprinkler.ONLINE
                 ? R.drawable.ic_baseline_online_24
                 : R.drawable.ic_baseline_offline_24);
-        holder.powerToggle.setOnClickListener(v -> updateCards(database.toggleStatus(cards.get(position))));
+        holder.powerToggle.setOnClickListener(v -> {
+            cards.add(position, database.toggleStatus(cards.remove(position)));
+            notifyDataSetChanged();
+        });
     }
 
     @Override
