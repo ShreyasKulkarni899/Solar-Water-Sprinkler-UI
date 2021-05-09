@@ -1,6 +1,8 @@
 package com.nkocet.untitled;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,5 +37,18 @@ public class CropDetailsPane extends AppCompatActivity {
         back.setOnClickListener(v -> finish());
         share.setOnClickListener(v -> Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show());
 
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String title = "This Is Title";
+                String  body = "This Is Body";
+                intent.putExtra(Intent.EXTRA_TEXT,title);
+                intent.putExtra(Intent.EXTRA_TEXT,body);
+                startActivity(Intent.createChooser(intent,"SHARE USING:"));
+
+            }
+        });
     }
 }
