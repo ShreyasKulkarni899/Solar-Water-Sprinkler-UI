@@ -12,42 +12,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
-        android:text="@string/help_head"
-        android:textSize="56sp"
+        android:text="Help"
+        android:textSize="56dp"
         android:layout_marginLeft="150dp"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="150dp" />
+        />
 
     <ImageView
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:background="@drawable/ic_baseline_help_vs_2"
         android:layout_marginLeft="95dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="95dp" />
+        android:layout_marginTop="25dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="90dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAddDevice"
                 android:layout_width="380dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:focusable="true"
+                android:layout_height="250dp"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:outlineAmbientShadowColor="@color/black"
+                android:outlineSpotShadowColor="@color/white"
                 app:cardCornerRadius="36dp"
-                tools:ignore="InvalidId"
-                android:layout_marginStart="20dp">
+                tools:ignore="InvalidId">
 
                 <ImageView
                     android:layout_width="380dp"
@@ -57,73 +55,63 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="185dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/add_device"
+                    android:text="Add Device "
                     android:textColor="#707070"
-                    android:textSize="36sp"
-                    android:layout_marginLeft="20dp" />
+                    android:textSize="36dp" />
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginLeft="325dp"
                     android:layout_marginTop="195dp"
-                    android:background="@drawable/ic_baseline_arrow_forward_ios_24"
-                    android:layout_marginStart="325dp" />
+                    android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
 
             </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCropGuide"
                 android:layout_width="380dp"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
+                android:layout_marginTop="260dp"
                 android:background="@color/white"
-                android:layout_marginLeft="20dp"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="36dp"
-                tools:ignore="InvalidId"
-                android:layout_marginStart="20dp">
-
-                <ImageView
-                    android:layout_width="380dp"
-                    android:layout_height="180dp"
-                    android:background="@drawable/radial_image_help" />
+                android:elevation="10dp"
+                android:outlineAmbientShadowColor="@color/black"
+                android:outlineSpotShadowColor="@color/white"
+                app:cardCornerRadius="36dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="185dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/crop_guide"
+                    android:text="Crop Guide "
                     android:textColor="#707070"
-                    android:textSize="36sp"
-                    android:layout_marginLeft="20dp" />
+                    android:textSize="36dp" />
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginLeft="325dp"
                     android:layout_marginTop="195dp"
-                    android:background="@drawable/ic_baseline_arrow_forward_ios_24"
-                    android:layout_marginStart="325dp" />
+                    android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
 
             </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardSettingGuide"
                 android:layout_width="380dp"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="520dp"
                 android:background="@color/white"
-                android:layout_marginLeft="20dp"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="36dp"
-                tools:ignore="InvalidId"
-                android:layout_marginStart="20dp">
+                android:elevation="10dp"
+                android:outlineAmbientShadowColor="@color/black"
+                android:outlineSpotShadowColor="@color/white"
+                app:cardCornerRadius="36dp">
 
                 <ImageView
                     android:layout_width="380dp"
@@ -133,23 +121,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="185dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/setting_guide"
+                    android:text="Setting Guide "
                     android:textColor="#707070"
-                    android:textSize="36sp"
-                    android:layout_marginLeft="20dp" />
+                    android:textSize="36dp" />
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginLeft="325dp"
                     android:layout_marginTop="195dp"
-                    android:background="@drawable/ic_baseline_arrow_forward_ios_24"
-                    android:layout_marginStart="325dp" />
+                    android:background="@drawable/ic_baseline_arrow_forward_ios_24" />
 
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:layout_width="380dp"
+                android:layout_height="180dp"
+                android:background="@drawable/radial_image_help" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

@@ -24,4 +24,8 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac diam neque. Nulla suscipit dolor in fringilla volutpat. Nam volutpat justo at feugiat viverra. Donec varius accumsan lacinia. Fusce scelerisque, nisi at ultricies efficitur, odio mauris euismod lacus, nec bibendum dui est at metus. Phasellus volutpat, dolor ac euismod efficitur, augue urna efficitur ligula, sed egestas massa nulla sit amet dolor. In at convallis lorem. Nunc vitae urna vitae nisi congue semper. Suspendisse hendrerit libero ac orci pretium aliquam.
     </string>
     <string name="logout">Logout</string>
+    <string name="crop_guide">Crop Guide</string>
+    <string name="setting_guide">Setting Guide</string>
+    <string name="add_device">Add Device</string>
+    <string name="help_head">Help</string>
 </resources>
