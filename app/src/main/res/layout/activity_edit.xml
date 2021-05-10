@@ -18,12 +18,12 @@
             android:id="@+id/toolbar"
             android:layout_height="?actionBarSize"
             android:background="?attr/colorPrimary"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
             app:titleTextColor="?attr/colorOnPrimary">
 
             <ImageView
                 android:layout_marginLeft="20dp"
                 android:id="@+id/back"
+                style="?android:actionButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -33,7 +33,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/back"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal">

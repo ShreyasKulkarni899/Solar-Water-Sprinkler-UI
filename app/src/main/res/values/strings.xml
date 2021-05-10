@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Untitled App</string>
+    <string name="app_name">Drops</string>
     <string name="openNavBar">Navigation Drawer Open</string>
     <string name="closeNavBar">Navigation Drawer Close</string>
     <string name="title_activity_main2">MainActivity</string>

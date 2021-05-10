@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         if (isFirstTime)
-            startActivity(new Intent(MainActivity.this, SplashActivity.class));
+            startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
         else if (bioAuth)
             startActivity(new Intent(MainActivity.this, AuthenticationActivity.class));
         else

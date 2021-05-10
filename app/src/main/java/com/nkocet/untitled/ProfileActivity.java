@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +17,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextInputEditText nameEditText, phoneEditText, emailEditText;
     SharedPreferences preferences;
     MaterialButton update;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         nameEditText = findViewById(R.id.editName);
         phoneEditText = findViewById(R.id.editPhone);
         emailEditText = findViewById(R.id.editEmail);
+        back = findViewById(R.id.back);
         update = findViewById(R.id.update);
         preferences = getSharedPreferences("user", Context.MODE_PRIVATE);
 
@@ -54,5 +57,6 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+        back.setOnClickListener(v -> finish());
     }
 }

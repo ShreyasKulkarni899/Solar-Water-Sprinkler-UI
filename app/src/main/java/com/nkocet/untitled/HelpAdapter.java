@@ -29,8 +29,7 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.MyViewHolder> 
     @NonNull
     @Override
     public HelpAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.card_help, parent, false);
-        return new HelpAdapter.MyViewHolder(view);
+        return new HelpAdapter.MyViewHolder(inflater.inflate(R.layout.card_help, parent, false));
     }
 
     @Override
