@@ -15,6 +15,7 @@
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".CropDetailsPane" />
+        <activity android:name=".HelpDetailsPane" />
         <activity android:name=".AddDevice" />
         <activity
             android:name=".EditActivity"
