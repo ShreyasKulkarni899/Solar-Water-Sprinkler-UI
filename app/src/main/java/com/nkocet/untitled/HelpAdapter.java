@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,13 +14,13 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
+public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.MyViewHolder> {
 
-    ArrayList<ListModel> objectList;
+    ArrayList<HelpModel> objectList;
     LayoutInflater inflater;
     Context context;
 
-    public ListAdapter(Context context, ArrayList<ListModel> objectList) {
+    public HelpAdapter(Context context, ArrayList<HelpModel> objectList) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.objectList = objectList;
@@ -29,9 +28,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item, parent, false);
-        return new MyViewHolder(view);
+    public HelpAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.card_help, parent, false);
+        return new HelpAdapter.MyViewHolder(view);
     }
 
     @Override
@@ -42,30 +41,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ListModel current = objectList.get(position);
+        HelpModel current = objectList.get(position);
         holder.setData(current, position);
-        holder.cardView.setOnClickListener(v -> context.startActivity(new Intent(context, CropDetailsPane.class)
-                .putExtra("object", holder.currentObject)));
+        holder.cardView.setOnClickListener(v -> context.startActivity(new Intent(context, HelpDetailsPane.class).putExtra("object", holder.currentObject)));
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title;
-        ImageView imgThumb;
+        TextView headerTextHelp;
         int position;
-        ListModel currentObject;
+        HelpModel currentObject;
         MaterialCardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.list_item_parent);
-            title = itemView.findViewById(R.id.tvTitle);
-            imgThumb = itemView.findViewById(R.id.img_tmb);
+            cardView = itemView.findViewById(R.id.list_item_parent_help);
+            headerTextHelp = itemView.findViewById(R.id.headerTextHelp);
+
         }
 
-        public void setData(ListModel current, int position) {
-            this.title.setText(current.title);
-            this.imgThumb.setImageResource(current.imageId);
+        public void setData(HelpModel current, int position) {
+            this.headerTextHelp.setText(current.headerTextHelp);
             this.position = position;
             this.currentObject = current;
         }
